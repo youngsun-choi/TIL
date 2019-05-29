@@ -1,12 +1,27 @@
 # Git
 
-## Git 이란?
+## 1. Git 이란?
 
-* 버전 관리 시스템(VCS : Version Control System) 이다.
+* **버전 관리 시스템**(VCS : Version Control System) 이다.
 
+* 기능
 
+  1. Git을 이용하면 하나의 파일이름으로 버전 관리 할 수 있다.
 
-## Git 명령어
+     예를 들어  발표자료_최종본.pptx, 발표자료_진짜_최종본.pptx, 발표자료__정말_최종본.pptx 이라는 파일이있을 때, 버전관리를 발표자료_최종본.pptx 하나로 할 수 있다. 
+
+  2. 다른사람과 협업할 수 있다.
+
+* 구조
+
+  * git 구조도 이미지
+  * **Working Directory** : 현재 작업하고 있는 디렉토리를 말한다.
+  * **Stage Area** : 커밋이 되기위해 대기하는 파일이 저장된다. 
+  * **Repository** : 저장소이다.
+    * Local Repository : 자신의 PC에 존재하는 저장소를 말한다.
+    * Remote Repository : Github와 같은 원격 저장소를 말한다.
+
+## 2. Git 명령어
 
 * git : git에서 사용 가능한 명령어 리스트를 보여준다.
 
