@@ -236,4 +236,17 @@ W3C(World Wide Web Consortium)의 HTML WG(Working Group)을 통해서 만들어�
         4. margin{10px 10px 10px 10px;} : 상 우 하 좌
 
   * <http://troy.labs.daum.net/> : 모바일 반응형 웹페이지를 테스트해볼 수 있다.
+  
+  ### 4.3 웹페이지를 디자인할 때
+  
+  ​	(1) 모바일
+  
+  ​	(2) PC+모바일	
+  
+  * 반응형 웹 디자인(total)
+  
+  		* PC 디자인 + 모바일 디자인 : ex) PC : www.naver.com, 모바일 : m.naver.com
 
+---
+
+​	
