@@ -34,9 +34,9 @@ css와 동일하게 HTML
 - string 
 
   ```javascript
-  v1 = 123;
+  v1 = 123; //number
   document.writeln(v1+45+"<br>");	//168
-  v1 = '123';
+  v1 = '123'; //string
   document.writeln(v1+45+"<br>");	//12345
   ```
 
@@ -140,6 +140,8 @@ css와 동일하게 HTML
 
   ​																		  var 변수명 = new Array(값1, 값2, 값3 ... 값n);
 
+  
+
 * 특징
 
   (1) 하나의 배열에 저장되는 데이터 타입의 제한이 없다. ex) var array=[10, '가나다', true, 3.5]
@@ -149,6 +151,8 @@ css와 동일하게 HTML
   (3) 인덱스는 0부터 시작한다.
 
   (4) length 라는 속성을 사용하여 배열의 크기를 알 수 있다.
+
+  
 
 * 배열 리터럴
 
@@ -161,6 +165,8 @@ css와 동일하게 HTML
   	document.write("<h3>"+a1[0]+"</h3>"); //undefined
   </script>
   ```
+
+  
 
 * Java enhanced for문과의 차이
 
@@ -184,6 +190,8 @@ css와 동일하게 HTML
   </script>
   ```
 
+  
+
 * Array() 생성자 함수 이용한 배열 생성
 
   ``` javascript
@@ -195,6 +203,8 @@ css와 동일하게 HTML
   	var a5 = new Array(1,2,3,4,5); //원소값
   </script>
   ```
+
+  
 
 * 배열 객체의 주요 메서드 
 
@@ -314,9 +324,11 @@ css와 동일하게 HTML
   </script>
   ```
 
-* 
+  
 
-* 호출시 아규먼트의 갯수가 제한없는 함수를 만들고 싶을 때는 
+  (3) 가변 아규먼트
+
+* 호출시 아규먼트의 갯수가 제한없는 함수를 만들고 싶을 때는 다음과 같이 함수를 정의한다.
 
   function out() {
 
@@ -328,10 +340,8 @@ css와 동일하게 HTML
 
   함수 호출시 전달되는 아규먼트들을 유사배열 객체에 담아서 arguments 변수에 할당한다.
 
-  
-
   ``` javascript
-  <script>
+<script>
   	function out(){
   		document.write("아규먼트 갯수 : "+arguments.length+"<br>");
   		for(var i=0;i<arguments.length;i++)
@@ -342,7 +352,142 @@ css와 동일하게 HTML
   </script>
   ```
 
+
+
+* 함수의 아규먼트 처리
+
+  * 아규먼트로 함수 전달하기(=고차함수)
+
+    (1) 방법 : 익명함수, 함수표현식, 함수리터럴 방법
+
+    (2) 방법 : 함수 선언식 활용
+
+    (3) 방법 : 함수를 변수에 담아 사용하는 방법
+
+  * 함수와 메서드의 차이
+    * 함수 : 단독으로 호출 가능하다.
+    * 메서드 : 객체 생성을 통해 호출 가능하다. 
+
+  ``` javascript
+  <script>
+  output("둘리");
+  output(function (param) {console.log(param);}); //(1) 방법
+  function myAlert(param){ //(2) 방법
+  	window.alert(param); //경고창
+  } 
+  output(myAlert);
+  var myAlert2 = function (param){ //(3) 방법
+  	window.alert(param); //경고창
+  }
+  output(myAlert2); //myAlert 함수 자체를 전달하겠다는 것이므로 함수이름만 전달해야한다!!!
+  function output(p){ //코드를 읽을 때 함수정의와 전역변수를 제일 먼저 읽는다.
+  	if(typeof p == "function")
+  		p("ㅋㅋㅋ");
+  	else
+  		document.write("<h2>ㅋㅋㅋ : "+p+"</h2><br>");
+  }
+  </script>
+  ```
+
+---
+
+## 1.7 객체
+
+OBP -> OOP
+
+* 객체 생성 방법
+
+  (1) 객체 리터럴
+
+  (2) 생성자 함수 (자바의 클래스와 유사함)
+
+* 객체 리터럴 : 1번만 객체를 만들어 사용할 경우
+
+  {}
+
+  {속성명 : 속성값, 속성명 : 속성값 ...} : 속성값으로는 숫자, 문자열, 논리값, 배열, 함수(메서드)
+  * 객체의 멤버 접근 방법
+
+    (1) 멤버 연산자 : .
+
+    (2) 인덱싱 방법 : ['속성명']
+
+    ​	obj.name, obj['name']
+
+    ​	obj.project, obj['project']
+
+    ​	obj.study()
+
+    ​	obj.eat('딸기')
+
+  ``` javascript
+  <script src="util.js"></script>
+  <script>
+  var obj = {
+  			name : "듀크", //멤버변수
+  			eat : function(food){ //객체 메서드
+  			write(this.name+"가 "+food+"를 먹어요.","h3"); //this를 생략해서는 안된다. 
+               }  					//this를 사용하지 않으면 window객체의 name을 사용한다...
+  		 }
+  obj.eat("바나나"); //듀크가 바나나를 먹어요.			
+  obj.eat("딸기"); //듀크가 딸기를 먹어요.		
+  hr()
+  write(typeof obj,"h2"); //Object
+  obj.project="자바스크립트";
+  obj.study=function(){
+  	write(this.name+"는 "+this.project+"를 공부해요.","h3");
+  }
+  obj.study();
+  for(var key in obj){ //key에는 obj가 갖고 있는 속성명(문자열형식)이 대입된다.
+  	write(key+ " : "+obj[key],"h3"); // obj[key] 대신 obj.key를 사용하면 객체 obj의 속성 key라는 									    문자열을 찾기에 undefined 오류가 난다.
+  }
+  delete obj.study; //obj가 가지고 있는 study속성을 없애라는 것이다.
+  hr();
+  for(var key in obj){ 
+  	write(key+ " : "+obj[key],"h3");
+  }
+  </script>
+  ```
+
+  ``` javascript
+  //util.js
+  function write(content, tag){
+  	document.write("<"+tag+">"+content+"</"+tag+">");
+  }
+  function hr(){
+  	document.write("<hr>");
+  }
+  ```
+
+* 생성자 함수(클래스+생성메서드)
+
+  객체를 초기화하는 역할의 함수이다. (객체를 초기화한다는 것은 비어있는 객체에 멤버를 넣어주는 역할을 말한다.)
+
+  사용방법 : new와 함께 호출된다. (new 다음에 호출하지 않으면 이상해진다...)
+
+  이름을 정할 때 첫 글자를 대문자로 한다. 
+
+* 객체 리터럴 방식과 생성자 함수 방식의 비교
+
   
+
+* | 객체리터럴 방식                                              | 생성자 함수 방식                                             |
+  | ------------------------------------------------------------ | ------------------------------------------------------------ |
+  | -객체 리터럴 방식은 하나의 객체만을 만들 수 있게 된다. (싱글톤 객체)<br/>-prototype 속성 사용이 불가하다. | -동일한 속성 사양을 갖는 객체들을 여러개 생성하는 것이 가능하다.<br/>-prototype 속성 사용이 가능하다.<br/>-정적 멤버를 정의할 수 있다.<br/>-캡슐화나 정적 멤버와 같은 OOP 구문을 적용하여 객체를 생성하는 것이 가능하다. |
+
+  
+
+* prototype
+
+  생성자 함수에는 멤버변수만 초기화만 구현하고, 프로토타입에는 메서드를 초기화한다.
+
+  객체리터럴 방식은 prototype 속성 사용이 불가하다.
+
+  
+
+
+
+
 
 
 
