@@ -5,7 +5,6 @@
 * JavaScript : 라이브스크립트라는 이름에서 최종적으로 자바스크립트가 되었다. 동적인 웹페이지 제작에 사용되는 언어이며 정적인 웹페이지를 생산하는 HTML을 보완한다. OOP언어로 넷스케이프 -> ECMA로 바뀌면서 오픈언어가 되었다.
 * Java : 범용 언어이면서 OOP언어이다. 썬마이크로시스템즈 -> Oracle로 바뀌었다.
 
-css와 동일하게 HTML
 
 ## 1.1 JavaScript 구문 정리
 
@@ -19,7 +18,7 @@ css와 동일하게 HTML
   - 클래스
 - 주요 API - 내장함수, 내장객체, BOM, **DOM**
 
-- 주석 : 
+- 주석 
   - 한줄 주석 
   - 다중 주석 : /* 주석내용 */
 
@@ -113,7 +112,7 @@ css와 동일하게 HTML
       	var num=5;
   		//num이 짝수이면 "xx는 짝수"
   		//num이 홀수이면 "xx는 홀수"
-  		num%2 == 0 **&&** document.writeln(num+"는 짝수");	//앞의 식이 참이면 두 번째 식 수행
+  		num%2 == 0 && document.writeln(num+"는 짝수");	//앞의 식이 참이면 두 번째 식 수행
   		num%2 == 0 || document.writeln(num+"는 홀수");	//앞의 식이 거짓이면 두 번째 식을 수행	
       </script>
   </pre>
@@ -170,7 +169,7 @@ css와 동일하게 HTML
 
 * Java enhanced for문과의 차이
 
-  (1) : 대신 in을 사용한다.
+  (1) for(int data : array)에서 : 대신 for(int data in array) in을 사용한다.
 
   (2) undefined 값은 무시하고 유효한 값만 출력한다.
 
@@ -229,7 +228,7 @@ css와 동일하게 HTML
     	ary5.push(200);
     	ary5.push(500);
     	ary5.push(600,700,800);
-    	document.write(ary5+"<br>");
+    	document.write(ary5+"<br>"); //100,200,500,600,700,800
     </script>
     ```
 
@@ -274,7 +273,7 @@ css와 동일하게 HTML
   	document.write('<hr>');
   	var result1=f1();
   	var result2=f2(100,200);
-  	document.write("result1 : "+result1+", result2 : "+result2+"<br>");
+  	document.write("result1 : "+result1+", result2 : "+result2+"<br>"); //undefined
   	if(!result1) //true : undefined 값을 boolean값으로 바꾸면 false이다.
   		document.write("리턴값이 없군요!!!");
   	document.write('<hr>');
@@ -313,11 +312,11 @@ css와 동일하게 HTML
   	} else if (typeof p == "function") {
   		alert("함수 전달!!");
   	} else if (typeof p == "object") {
-  		if (Array.isArray(p))
+  		if (Array.isArray(p)) //배열이면 true 아니면 false
   			alert("배열객체 전달!!");
   		else 
   			alert("객체 전달!!");
-  	} else if (typeof p == "undefined") {  // p == undefined 
+  	} else if (typeof p == "undefined") {  // p == undefined 와 같이 값만 비교가능 
   		alert("전달된 아규먼트 없음!!");
   	}	
   }
@@ -341,14 +340,14 @@ css와 동일하게 HTML
   함수 호출시 전달되는 아규먼트들을 유사배열 객체에 담아서 arguments 변수에 할당한다.
 
   ``` javascript
-<script>
-  	function out(){
-  		document.write("아규먼트 갯수 : "+arguments.length+"<br>");
-  		for(var i=0;i<arguments.length;i++)
-  			console.log(arguments[i]);
-  		console.log("-------------------------------------------");
-  	}
-  	out(); out(10); out(10,20); out('a','b','c'); out(1,2,3,4,5,6,7,8);
+  <script>
+    	function out(){
+    		document.write("아규먼트 갯수 : "+arguments.length+"<br>");
+    		for(var i=0;i<arguments.length;i++)
+    			console.log(arguments[i]);
+    		console.log("-------------------------------------------");
+    	}
+    	out(); out(10); out(10,20); out('a','b','c'); out(1,2,3,4,5,6,7,8);
   </script>
   ```
 
@@ -356,38 +355,40 @@ css와 동일하게 HTML
 
 * 함수의 아규먼트 처리
 
-  * 아규먼트로 함수 전달하기(=고차함수)
+    * 아규먼트로 함수 전달하기(=고차함수)
 
-    (1) 방법 : 익명함수, 함수표현식, 함수리터럴 방법
+      (1) 방법 : 익명함수, 함수표현식, 함수리터럴 방법
 
-    (2) 방법 : 함수 선언식 활용
+      (2) 방법 : 함수 선언식 활용
 
-    (3) 방법 : 함수를 변수에 담아 사용하는 방법
+      (3) 방법 : 함수를 변수에 담아 사용하는 방법
 
-  * 함수와 메서드의 차이
-    * 함수 : 단독으로 호출 가능하다.
-    * 메서드 : 객체 생성을 통해 호출 가능하다. 
+    * 함수와 메서드의 차이
+      * 함수 : 단독으로 호출 가능하다.
+      * 메서드 : 객체 생성을 통해 호출 가능하다. 
 
   ``` javascript
   <script>
-  output("둘리");
-  output(function (param) {console.log(param);}); //(1) 방법
-  function myAlert(param){ //(2) 방법
-  	window.alert(param); //경고창
-  } 
-  output(myAlert);
-  var myAlert2 = function (param){ //(3) 방법
-  	window.alert(param); //경고창
-  }
-  output(myAlert2); //myAlert 함수 자체를 전달하겠다는 것이므로 함수이름만 전달해야한다!!!
-  function output(p){ //코드를 읽을 때 함수정의와 전역변수를 제일 먼저 읽는다.
-  	if(typeof p == "function")
-  		p("ㅋㅋㅋ");
-  	else
-  		document.write("<h2>ㅋㅋㅋ : "+p+"</h2><br>");
-  }
-  </script>
+    output("둘리");
+    output(function (param) {console.log(param);}); //(1)방법
+    function myAlert(param){ //(2)방법
+    	window.alert(param); //경고창
+    } 
+    output(myAlert);
+    var myAlert2 = function (param){ //(3)방법
+    	window.alert(param); //경고창
+    }
+    output(myAlert2); //myAlert2 함수 자체를 전달하겠다는 것이므로 함수이름만 전달해야한다!!!
+    function output(p){ //코드를 읽을 때 함수정의와 전역변수를 제일 먼저 읽는다.
+    	if(typeof p == "function")
+    		p("ㅋㅋㅋ");
+    	else
+    		document.write("<h2>ㅋㅋㅋ : "+p+"</h2><br>");
+    }
+    </script>
   ```
+
+  
 
 ---
 
@@ -483,7 +484,178 @@ OBP -> OOP
 
   객체리터럴 방식은 prototype 속성 사용이 불가하다.
 
+  ``` javascript
+  <script>
+  function Student(p1,p2,p3,p4){ 
+  								this.name = p1, 
+  								this.kor = p2, 
+  								this.eng = p3,
+  								this.math = p4				
+  }
+  Student.prototype.getSum = function(){ //생성자 함수에 의해서 자동으로 만들어진다.
+  	return this.kor+this.eng+this.math;  //메모리 구조를 효율적으로 사용한다.
+  };
+  Student.prototype.getAvg = function(){
+  	return this.getSum()/3; 
+  };
+  Student.prototype.toString =  function(){
+  	return this.name+"학생의 총점은 "+this.getSum()+"입니다.";
+  };
   
+  var student=new Student("둘리", 90, 80, 95);
+  var student1=new Student("또치", 80, 90,80);
+  var student2=new Student("도우너", 85, 70, 80);
+  
+  writeColor("학생1 : "+student.toString(),"h3","green"); //객체를 생성하여 메서드 호출 : 객체명.메서드명
+  writeColor("학생2 : "+student1,"h3","blue"); 
+  writeColor("학생3 : "+student2,"h3","red"); 
+  </script>
+  ```
+  
+  
+
+* prototype영역에 넣어서 정의한 메서드와 정적 메서드 차이
+
+  * 메모리 영역에 한 번만 할당한다는 것은 같다.
+  * 정적메서드는 this를 사용할 수 없다.
+  * 단독으로 수행되어야할 경우 정적메서드로 구현한다.
+
+  ``` javascript
+  <script>
+  function Area() { //기본적인 생성자함수 구조
+  }
+  Area.version = '1.0'; //정적속성
+  Area.triangle = function(base, height) { //정적메서드
+    return base * height / 2;
+  }
+  Area.diamond = function(width, height) {
+    return width * height / 2
+  }
+  document.writeln('Area클래스의 버전：' + Area.version); //생성자함수 이름으로 멤버변수를 호출한다.
+  document.writeln('삼각형의 면적：' + Area.triangle(5, 3));
+  var a = new Area();
+  document.writeln('마름모의 면적：' + Area.diamond(10, 2));
+  document.writeln('마름모의 면적：' + a.diamond(10, 2));
+  </script>
+  ```
+
+
+
+---
+
+## 1.8 주요 API
+
+* **BOM**(Browser Object Model)
+
+  브라우저가 제공하는 자바스크립트 API
+
+  미리 객체를 생성해서 제공 (브라우저가 기동될 떄 생성해서 제공)
+
+  - window, location, document, history, screen(화면 사이즈, 해상도를 담고 있는 객체), navigator(브라우저에 대한 정보, 플랫폼에 대한 정보를 담고 있는 객체 / 위도, 경도) 
+
+  - window 객체
+
+    - id = setInterval(func, 초시간) : 주기적으로 함수를 수행시킨다.
+
+      clearInterval(id)
+
+    - id = setTimeout(func, 초시간) : 어떤 시간이 지났을 때 어떤 함수를 1번만 수행시킨다. 주기적인 것은 없다. 
+
+      clearTimeout(id)
+
+    - alert(), confirm(), prompt(), open()
+
+  - location
+
+    - href : 현재 보고있는 페이지의 url 정보를 가지고 있다. 
+    - reload() : 현재 페이지를 자동으로 새로고침한다.
+
+  - history
+
+    - go(n) : 현재 페이지를 기준으로 전이면
+
+  - screen
+
+    - width
+    - height
+
+  - navigator 객체
+
+    웹 브라우저에 대한 정보를 제공하는 객체
+
+    - **user-agent**
+
+    - getLocation() 
+
+      
+
+* **Dom**(Document  Object Model)
+
+  HTML 파서들은 파싱한 HTML 문서 각각의 태그, 태그의 속성, 태그의 텍스트 형식의 컨텐트 
+
+  모두 자바스크립트 객체로 생성한다. (이유 : 자바스크립트에서 HTML태그에 접근가능하도록 지원하기 위해서)
+
+  HTML 태그를 document 객체의 자손 객체로 등록한다.
+
+  (ex) document.body
+
+  ``` javascript
+  document.getElementById("id속성값"); //태그에 정의된 id속성, Dom객체 1개 리턴
+  
+  document.getElementsByClassName("class속성값");  //태그에 정의된 class속성, 배열객체리턴
+  
+  document.getElementsByTagName("태그명");  
+  
+  document.getQuerySelector("CSS선택자"); //다양하게 태그를 찾을 수 있다.
+  
+  document.getQuerySelectorAll("CSS선택자");  
+  ```
+
+
+
+* 이벤트 핸들러 구현
+
+  * 이벤트 : 웹페이지상에서 발생되는 일
+
+    (1) 브라우저에서 자동으로 발생 (load-렌더링이 끝나면 발생)
+
+    (2) 사용자의 액션에 의해서 발생 (click, mouseover, mouseenter, mouseout, keyin, keyout, keypress, scroll, change, submit, reset 등)
+
+  * 타겟 : 이벤트가 발생된 대상 객체
+
+  * 이벤트 핸들러(리스너) : 이벤트가 발생했을 때 수행되는 코드를 담고 있는 함수
+
+  * 이벤트 모델 : 특정한 타겟에서 정해진 이벤트가 발생했을 때 핸들러가 수행되도록 구현하는 방법
+
+    (1) 인라인 이벤트 모델(지역방식) 
+
+    (2) 고전 이벤트 모델(전역방식)
+
+    (3) 표준 이벤트 모델(전역방식)  
+
+* 인라인 이벤트 모델(지역방식) 
+
+  태그의 속성으로 등록 : onXXX = "이벤트 핸들러 코드"
+
+  (ex) onclick(onClick, onCLICK) = "수행문장1;수행문장2;수행문장3;..."
+
+  
+
+* 고전 이벤트 모델(전역방식)
+
+  DOM객체를 찾는다.
+
+  DOM객체.onxxx(반드시 소문자) = 함수;
+
+  DOM객체.onxxx(반드시 소문자) = null; //고전 이벤트 모델을 해제한다.
+
+* 표준 이벤트 모델(전역방식)  
+
+  DOM객체를 찾는다.
+
+  DOM객체.addEventListner("이벤트이름", 함수)
+
+  DOM객체.removeEventListner("이벤트이름", 함수) //표준 이벤트 모델을 해제한다.
 
 
 
