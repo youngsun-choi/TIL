@@ -632,6 +632,8 @@ OBP -> OOP
     (2) 고전 이벤트 모델(전역방식)
 
     (3) 표준 이벤트 모델(전역방식)  
+    
+    
 
 * 인라인 이벤트 모델(지역방식) 
 
@@ -649,6 +651,8 @@ OBP -> OOP
 
   DOM객체.onxxx(반드시 소문자) = null; //고전 이벤트 모델을 해제한다.
 
+  
+
 * 표준 이벤트 모델(전역방식)  
 
   DOM객체를 찾는다.
@@ -656,10 +660,38 @@ OBP -> OOP
   DOM객체.addEventListner("이벤트이름", 함수)
 
   DOM객체.removeEventListner("이벤트이름", 함수) //표준 이벤트 모델을 해제한다.
+  
+  
 
+---
 
+## 1.9 HTML5 API
 
+* Canvas API
 
+  웹 페이지에 그림을 그릴 수 있도록 지원하는 HTML5 API이다.
+
+  ``` javascript
+  //그리기 기능 지원 메서드
+  arc(x, y, r, startAngle, endAngle, anticlockwise) // anticlockwise가 true면 반시계방향, false면 시계방향으로 그린다.
+  drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight) //이미지 잘라서 출력
+  
+  //그라디언트와 패턴 메서드
+  createLinearGradient(x1, y1, x2, y2) //선형그라디언트 객체를 생성한다.
+  createRadialGradient(x1, y1, r1, x2, y2, r2) //원형그라디언트 객체를 생성한다.
+  save() //캔버스의 상태정보를 스택에 저장
+  restore() //스택에 저장된 상태 정보를 인어온다.
+  
+  //도형변형
+  scale(x, y) //도형의 크기를 조정한다.
+  
+  //도형합성
+  globalCompositeOperatio // 원본(먼저 그린 도형) 도형과 대상(나중에 그린 도형) 도형의 겹쳐진 형태에 따른 표시 방법을 정의한다.
+  ```
+
+  
+
+  (ex)
 
 
 
