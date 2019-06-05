@@ -667,33 +667,83 @@ OBP -> OOP
 
 ## 1.9 HTML5 API
 
-* Canvas API
+* **Canvas API**
 
   웹 페이지에 그림을 그릴 수 있도록 지원하는 HTML5 API이다.
 
-  ``` javascript
-  //그리기 기능 지원 메서드
-  arc(x, y, r, startAngle, endAngle, anticlockwise) // anticlockwise가 true면 반시계방향, false면 시계방향으로 그린다.
-  drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight) //이미지 잘라서 출력
+  (1) arc(x,y,r,startAngle, endAngle, anticlockwise) : anticlockwise가 true면 반시계방향, false면 시계방향으로 그린다.
   
-  //그라디언트와 패턴 메서드
-  createLinearGradient(x1, y1, x2, y2) //선형그라디언트 객체를 생성한다.
-  createRadialGradient(x1, y1, r1, x2, y2, r2) //원형그라디언트 객체를 생성한다.
-  save() //캔버스의 상태정보를 스택에 저장
-  restore() //스택에 저장된 상태 정보를 인어온다.
+  (2) drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight) : 이미지를 잘라서 출력한다.
   
-  //도형변형
-  scale(x, y) //도형의 크기를 조정한다.
+  (3) createLinearGradient(x1, y1, x2, y2) : 선형그라디언트 객체를 생성한다.
   
-  //도형합성
-  globalCompositeOperatio // 원본(먼저 그린 도형) 도형과 대상(나중에 그린 도형) 도형의 겹쳐진 형태에 따른 표시 방법을 정의한다.
-  ```
-
+  (4) createRadialGradient(x1, y1, r1, x2, y2, r2) : 원형그라디언트 객체를 생성한다.
   
+  (5) save() : 캔버스의 상태정보를 스택에 저장한다.
+  
+  (6) restore() : 스택에 저장된 상태 정보를 읽어온다.
+  
+  (7) scale(x, y) : 도형의 크기를 조정한다.
+  
+  (8) globalCompositeOperatio : 원본(먼저 그린 도형) 도형과 대상(나중에 그린 도형) 도형의 겹쳐진 형태에 따른 표시 방법을 정의한다.
+  
+  (9) **toDataURL()** : canvas 태그 영역의 모든 내용을 png 형식의 URL 문자열로 변환하여 리턴한다. 
 
-  (ex)
+  ​						storage에는 텍스트형식으로만 저장이 가능하다.
 
+* **Web Storage API**
 
+  웹 브라우저에 자료를 저장하기 위한 기능을 지원하는 API로 로컬스토리지와 세션스토리지로 나뉜다.
 
+  * **Local Storage** : 저장하려는 데이터를 영구 보관한다. 
+  * **Session Storage** : 저장하려는 데이터를 브라우저가 종료될 때까지 보관한다.
+  * W3C는 Same Origin Policy(동일 출처 정책)에 따라 도메인당 5MB를 권장하고 있으며 추가 용량이 필요한 경우 사용자의 동의를 얻어 용량을 확장할 수 있다.(초과시 QUOTA_EXCEEDED-ERR 발생)
 
+  * window.localStorage 와 window.sessionStorage 의 주요 멤버
+
+    (1) **length** : 스토리지에 저장된 key, value 쌍의 개수를 추출한다.
+
+    (2) **key(index)** : 숫자형 인덱스에 해당하는 key를 리턴한다.
+
+    (3) **getItem(key)** : 스토리지로부터 key에 해당하는 value를 **추출**한다.
+
+    (4) **setItem(key, value)** : 스토리지로부터 key에 해당하는 value를 **저장**한다.
+
+    (5) **removeItem(string key)** : 스토리지 key에 해당하는 value를 **제거**한다.
+
+    (6) **clear()** : 현재 스토리지의 모든 데이터를 **제거**한다.
+
+    (7) **onstorage**: **로컬스토리지**의 내용이 변경될 때마다 이벤트이다. **StorageEvent** 객체가 생성된다.
+
+    ​	[StorageEvent 객체의 주요 속성]
+
+    		- key : 추가,삭제,변경된 키 이름
+    		- oldValue : 업데이트되기 전의 값, 새로 추가된 값이면 **null**
+    		- newValue : 새로 업데이트된 값, 기존 값을 삭제한 경우에는 **null**
+    		- url : 변경사항이 발생된 페이지의 URL
+
+  * <https://www.caniuse.com/> : Opera Mini를 제외한 웹,앱 브라우저에서 WebStorage API를 지원한다는 것을 확인할 수 있다.
+
+  * 크롬 - 개발자 도구 - Application - Local Storage : 저장한 데이터를 확인할 수 있다.
+
+    Local Storage에 저장된 데이터는 localhost:8000번 페이지에서만 공유해서 사용할 수 있다.
+
+* **Drag&Drop API**
+
+  마우스를 사용하여 애플리케이션 간에 파일이나 애플리케이션의 데이터를 전달,복사하는 기능을 하는 API이다.
+
+  사용자 편의를 고려한 UI기능을 한다.
+
+  * 드래그할 수 있는 대상 : 클라이언트의 외부파일, 웹페이지 상의 컨텐트 (HTML5는 2가지 모두 지원한다.)
+  * \<img> element는 디폴트로 draggable 속성의 값이 true이다.
+  * 다른 엘리먼트는 draggable 속성의 값을 true로 지정하면 드래그가 가능한 소스객체가 된다.
+
+  * Drag&Drop 관련 이벤트
+
+    | 드래그가 가능한 대상(소스 객체) | 드롭이 가능한 영역(타겟 객체) |
+    | ------------------------------- | ----------------------------- |
+    | dragStart 이벤트                | dragenter 이벤트              |
+    | dragend 이벤트                  | dragleave 이벤트              |
+    | drag 이벤트                     | dragover 이벤트               |
+    |                                 | drop 이벤트                   |
 
