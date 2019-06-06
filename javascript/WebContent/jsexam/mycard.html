@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>HTML5로 이모티콘 카드 만들기</title>
+<link rel="stylesheet" href="mycard.css">
+</head>
+<body>
+<h1>HTML5로 이모티콘 카드 만들기</h1>
+<button onclick="save();">저장하기</button>
+<button onclick="reStore();">읽어오기</button>
+<button onclick="clearAll();">지우기</button><br><br>
+배경 컬러 설정 : <input type="color" id="bgcolor" onchange="changeBgColor();"> 
+<!-- 테두리 컬러 설정 : <input type="color" id="stColor" onchange="changeBgColor();"><br>
+메시지 컬러 설정 : <input type="color" id="txColor" onchange="changeBgColor();"> 
+입력 메시지 : <input type="text"> --><br><br>
+<section>
+	<canvas id="cv1"></canvas>
+	<canvas id="cv2"></canvas>
+</section>
+<script>
+var canvas1;
+var context;
+function save() {
+	canvas1 = document.getElementById("cv1");
+	alert(canvas1.toDataURL());
+	localStorage.setItem("canvas", canvas1.toDataURL());
+}
+function clearAll() { //clear로 이름을 주면 안된다!!!
+	console.log("CLEAR");
+	context = canvas1.getContext("2d"); //2차원 객체에 대한 2d context를 가져온다.
+	context.clearRect(0, 0, canvas1.width, canvas1.height);
+}
+function reStore() {
+	console.log("RESTORE");
+	var img = new Image();
+	img.src = localStorage.getItem("canvas"); //img.src : 메모리상에 이미지를 넣는다는 것이다. 
+	img.onload = function() { //load는 window객체, body태그, img태그에서만 발생한다. 
+		context.drawImage(img, 0, 0);
+	}
+} 
+/* document.getElementById("bgcolor").onchange = function(){ //인라인으로 하면 안됨
+	//alert(this.value);
+	canvas1.style.backgroundColor="lightblue";
+} */
+function changeBgColor(){ //style.backgroundColor을 사용할 때는 객체를 변수에 담아 사용하면 안된다!!!
+	//alert(this.value);
+	document.getElementById("cv1").style.backgroundColor="lightblue";
+}
+document.getElementById("bgcolor").addListener
+</script>
+</body>
+</html>
