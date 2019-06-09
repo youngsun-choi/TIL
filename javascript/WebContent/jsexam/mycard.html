@@ -13,36 +13,69 @@
 배경 컬러 설정 : <input type="color" id="bgcolor"> 
 테두리 컬러 설정 : <input type="color" id="stcolor"><br>
 메시지 컬러 설정 : <input type="color" id="txcolor"> 
-입력 메시지 : <input type="text" id="message"><br><br>
-<section>
-	<canvas id="cv1"></canvas>
+입력 메시지 : <input type="text" id="message"><br>
+<section id="dropbox">
+	<canvas id="cv" width="500" height="600"></canvas>
 </section>	
 <section id="picturesbox">
-	<img id="image1" src="monster1.gif">
-    <img id="image2" src="monster2.gif">
-    <img id="image3" src="monster3.gif">
-    <img id="image4" src="monster4.gif">
+	<img id="image1" src="/javascript/images/g1.png">
+    <img id="image2" src="/javascript/images/g2.png">
+    <img id="image3" src="/javascript/images/g3.png">
+    <img id="image4" src="/javascript/images/g10.png">
+    <img id="image5" src="/javascript/images/g11.png">
+    <img id="image6" src="/javascript/images/g12.png">
+    <img id="image7" src="/javascript/images/g17.png">
+    <img id="image8" src="/javascript/images/g18.png">
+    <img id="image9" src="/javascript/images/g19.png">
 </section>
-	<!-- <canvas id="cv2"></canvas> -->
-
 <script>
-var myCanvas=document.getElementById("cv1");
-//var imgCanvas=document.getElementById("cv2");
+var myCanvas=document.getElementById("cv");
 var context=myCanvas.getContext("2d");
+
+function initiate(){
+	var images=document.querySelectorAll('#picturesbox > img');
+	for(var i=0;i<images.length;i++){
+		images[i].addEventListener('dragstart',dragged,false);
+		images[i].addEventListener('dragend',ending,false);
+	}
+	myCanvas.addEventListener('dragover',function(e){e.preventDefault();},false);
+	myCanvas.addEventListener('drop',dropped,false);
+}
+function ending(e){
+	elem = e.target;
+}
+function dragged(e){
+	console.log("드래그 시작");
+	var elem=e.target;
+	e.dataTransfer.setData('aa',elem.getAttribute('id'));
+	e.dataTransfer.setDragImage(e.target,0,0);	
+}
+function dropped(e){
+	e.preventDefault();
+	var id = e.dataTransfer.getData('aa');
+	var elem = document.getElementById(id);
+	var posx = e.pageX - myCanvas.offsetLeft;
+	var posy = e.pageY - myCanvas.offsetTop;
+	context.drawImage(elem,posx,posy,myCanvas.width * 0.3, myCanvas.height * 0.25);
+	console.log("드롭");
+	
+}
+window.addEventListener('load',initiate,false);
+
 function save() {
-	myCanvas = document.getElementById("cv1");
+	myCanvas = document.getElementById("cv");
 	alert(myCanvas.toDataURL());
 	localStorage.setItem("canvas", myCanvas.toDataURL());
 }
 function clearAll() { //clear로 이름을 주면 안된다!!!
 	console.log("CLEAR");
-	context = myCanvas.getContext("2d"); //2차원 객체에 대한 2d context를 가져온다.
+	context = myCanvas.getContext("2d"); 
 	context.clearRect(0, 0, myCanvas.width, myCanvas.height);
 }
 function restore() {
 	console.log("RESTORE");
 	var img = new Image();
-	img.src = localStorage.getItem("canvas"); //img.src : 메모리상에 이미지를 넣는다는 것이다. 
+	img.src = localStorage.getItem("canvas"); 
 	img.onload = function() { //load는 window객체, body태그, img태그에서만 발생한다. 
 	context.drawImage(img, 0, 0);
 	}
@@ -50,32 +83,25 @@ function restore() {
 document.getElementById("bgcolor").onchange = function(){
 	context.fillStyle = this.value;
 	context.fillRect(0, 0, myCanvas.width, myCanvas.height);
-	//document.getElementById("cv1").style.backgroundColor=this.value;
 } 
 document.getElementById("stcolor").onchange = function(){
 	context.strokeStyle = this.value;
 	context.strokeRect(0, 0, myCanvas.width, myCanvas.height);
 } 
-
-function clickCanvas1(e){
+function clickCanvas(e){
 	e.preventDefault();
-	var rect = myCanvas.getBoundingClientRect(); 
-	var posX = e.clientX - rect.left;
-	var posY = e.clientY - rect.top;
-	/* var posX = e.pageX - myCanvas.offsetLeft;
-	var posY = e.pageY - myCanvas.offsetTop; */
+	var posX = e.pageX - myCanvas.offsetLeft;
+	var posY = e.pageY - myCanvas.offsetTop; 
 	var message=document.getElementById("message").value.trim();
 	if(message != ""){
 		console.log(posX+", "+posY);
-		context.font = "12px Arial";
-		//context.textAlign = "left";
-		//context.textBaseline = "middle";
+		context.font = "18px Arial";
+		context.textBaseline = "top";
 		context.fillStyle = document.getElementById("txcolor").value;
 		context.fillText(message, posX, posY);
-	}else
-		alert("메세지를 입력해주세요!");
+	}
 }
-myCanvas.addEventListener("click",clickCanvas1); 
+myCanvas.addEventListener('click',clickCanvas,false); 
 </script>
 </body>
 </html>
