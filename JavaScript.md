@@ -24,13 +24,23 @@
 
 ---
 
-## 1.2 데이터 타입
+## 1.2 변수 생성 방법, 데이터 타입
 
-자바스크립트는 변수 선언할 때 타입을 제한하지 않는다. 어떤 값을 넣는냐에 따라 타입이 정해진다.
+*  변수 생성 방법
+
+  (1) 변수명의 맨 앞에는 숫자가 올 수 없다.
+
+  (2) 영문, _(밑줄 문자), $만 사용 가능하다.
+
+  (3) **대소문자를 구분**한다.
+
+* 데이터타입
+
+​	변수 선언할 때 타입을 제한하지 않는다. 어떤 값을 넣는냐에 따라 타입이 정해진다.
 
 - number
 
-- string 
+- string : " "(큰따옴표), ' '(작은따옴표) 모두 사용가능하다.
 
   ```javascript
   v1 = 123; //number
@@ -40,6 +50,8 @@
   ```
 
 - boolean
+
+- null
 
 - undefined : 타입명 또는 값으로 쓰인다.
 
@@ -84,9 +96,16 @@
 
 ## 1.3 연산자
 
-* A == B : A와 B의 데이터 값이 같은지 비교한다.
+관계 연산자
 
-* A === B : A와 B의 데이터 형이 같은지 비교한다.
+* A == B : A와 B의 **데이터 값**이 같은지 비교한다.
+* A === B : A와 B의 **데이터 형**이 같은지 비교한다.
+
+조건(삼항) 연산자
+
+* (조건식)? A : B; 
+
+논리 연산자
 
 * 식1&&식2&&식3
 
@@ -238,7 +257,7 @@
 
 * 함수 정의 방법
 
-  (1) 선언적 함수 정의 방법(명시적 함수 정의)
+  (1) **선언적 함수** 정의 방법(명시적 함수 정의)
 
   ​		function myFunction([매개변수 리스트]){
 
@@ -284,7 +303,7 @@
 
   
 
-  (2) 표현식 함수 정의 방법
+  (2) **표현식 함수** 정의 방법
 
   ​		function([매개변수 리스트]){
 
@@ -348,6 +367,11 @@
     		console.log("-------------------------------------------");
     	}
     	out(); out(10); out(10,20); out('a','b','c'); out(1,2,3,4,5,6,7,8);
+  	//아규먼트 갯수 : 0
+  	//아규먼트 갯수 : 1
+  	//아규먼트 갯수 : 2
+  	//아규먼트 갯수 : 3
+  	//아규먼트 갯수 : 8
   </script>
   ```
 
@@ -394,7 +418,7 @@
 
 ## 1.7 객체
 
-OBP -> OOP
+OBP(Object Based Programming) -> OOP(Object Oriented Programming)
 
 * 객체 생성 방법
 
@@ -480,7 +504,7 @@ OBP -> OOP
 
 * prototype
 
-  생성자 함수에는 멤버변수만 초기화만 구현하고, 프로토타입에는 메서드를 초기화한다.
+  생성자 함수에는 멤버변수 초기화만 구현하고, 프로토타입에는 메서드를 초기화한다.
 
   객체리터럴 방식은 prototype 속성 사용이 불가하다.
 
@@ -498,7 +522,7 @@ OBP -> OOP
   Student.prototype.getAvg = function(){
   	return this.getSum()/3; 
   };
-  Student.prototype.toString =  function(){
+  Student.prototype.toString = function(){
   	return this.name+"학생의 총점은 "+this.getSum()+"입니다.";
   };
   
@@ -547,13 +571,15 @@ OBP -> OOP
 
 * **BOM**(Browser Object Model)
 
+  웹 브라우저와 관련된 모든 객체들의 집합을 말한다.
+
   브라우저가 제공하는 자바스크립트 API
 
   미리 객체를 생성해서 제공 (브라우저가 기동될 떄 생성해서 제공)
 
   - window, location, document, history, screen(화면 사이즈, 해상도를 담고 있는 객체), navigator(브라우저에 대한 정보, 플랫폼에 대한 정보를 담고 있는 객체 / 위도, 경도) 
 
-  - window 객체
+  - window 객체(전역 객체)
 
     - id = setInterval(func, 초시간) : 주기적으로 함수를 수행시킨다.
 
@@ -568,7 +594,7 @@ OBP -> OOP
   - location
 
     - href : 현재 보고있는 페이지의 url 정보를 가지고 있다. 
-    - reload() : 현재 페이지를 자동으로 새로고침한다.
+    - reload() : 현재 페이지를 자동으로 새로고침한다. (href와 reload는 기억하기!)
 
   - history
 
@@ -747,3 +773,139 @@ OBP -> OOP
     | drag 이벤트                     | dragover 이벤트               |
     |                                 | drop 이벤트                   |
 
+---
+
+## 1.10  HTML5 부터 추가된 속성
+
+* **contenteditable** 속성
+
+  요소(Element)를 편집 모드로 변경하는 기능을 제공한다. 모든 태그에서 사용가능하다.
+
+  설정값
+  • true : 요소 편집 가능 상태
+  • false : 요소 편집 불가능 상태
+  • inherit : 부모 요소의 값 상속. 즉, 부모가 편집 가능하다면 이 요소도 편집 가능(디폴트)
+
+  
+
+---
+
+# Ajax (Asynchronous Javascript and xml)
+
+* **GML**(Geography Markup Language)(IBM에서 만듬 : 출판문서 작성용도로 사용)
+
+  ---> GML을 표준화시켜 만든 것이 **SGML**(Standard Generalized Markup Language)이다.
+
+  ​	  (표준 : 출판뿐만 아니라 규격문서를 작성하는 범용용도로 사용)
+
+  ---> **HTML**(웹페이지 제작용도) - 태그가 정해져 있음
+
+  ---> **XML**(Extensible Markup Language)(다목적 규격화된 문서 작성용) - 직접 태그 정의
+
+  ​	   <태그명>...<태그명/>  : 종료태그를 반드시 명시해야한다.
+
+  ​	   <태그명/>
+
+  ​	   <태그명 속성명="속성값">
+
+* XMLHttpRequest 객체
+
+  서버 측과의 비동기 통신을 제어한다.
+
+  XMLHttpRequest 객체 생성 : new XMLHttpRequest()
+
+  * open( ... ) : HTTP 요청을 초기화한다.
+
+  * send([body]) : HTTP 요청을 송신한다.
+
+  * onreadystatechange : 통신 상태가 변화된 타이밍에 호출되는 이벤트 핸들러이다.
+
+    readyState 값
+
+    | 반환값 | 설명                                                         |
+    | ------ | ------------------------------------------------------------ |
+    | 0      | 미초기화(open메서드가 호출되지 않음)                         |
+    | 1      | 로드 중(open메서드가 호출됨, send메서드는 호출되지 않음)     |
+    | 2      | 로드 완료(send 메서드가 호출됨, 응답스테이터스/헤더는 미취득) |
+    | 3      | 일부 응답을 취득(응답스테이터스/헤더만 취득, 본체는 미취득)  |
+    | 4      | 모든 응답데이터를 취득 완료                                  |
+
+    
+
+  * status : HTTP Status코드를 취득한다.
+
+    ``` javascript
+    function requestAjax() { //페이지 이동없이 데이터를 받아온다.
+    	var req = new XMLHttpRequest();
+    	var result = document.getElementById("result");
+    	req.onreadystatechange = function() {		
+    		alert("req.readyState : "+req.readyState);       
+    		if(req.status == 200 && req.readyState == 4) 
+             	//readyState 값 200은 서버로부터 응답이 성공적으로 왔다는 것이다.
+                //readyState 값 4는 서버로부터 응답이 다왔다는 것이다.
+    			result.innerHTML += req.responseText; 
+    	}	
+    	req.open("GET", "content/sample.txt", true); //true : 비동기 통신방식으로 보내겠다는 것이다.	
+    	req.send(); 	
+    }
+    ```
+
+  * [ XMLHttpRequest 객체에서 제공되는 이벤트 관련 속성 ]
+
+    - onloadstart
+
+    - onprogress
+
+    - onabort
+
+    - onerror
+
+    - onload
+
+    - ontimeout
+
+    - onloadend : 항상 마지막에 발생하는 이벤트이다.
+
+    - onreadystatechange
+
+      
+
+* **JSON**(JavaScript Object Notation)
+
+  인터넷에서 자료를 주고 받을 때 그 자료를 표현하는 방법이다.
+
+  ``` javascript
+  <script>
+  window.onload = function() {
+  	setInterval(function() { //폴링 - 주기적으로 서버한테 요청해서 데이터를 받아오는 기술이다.
+  		var request = new XMLHttpRequest(); //이용시간이 많을 때 더 자주 받아온다.
+  		request.onload = function(event) {
+  			if (request.status == 200) {
+  				var str = request.responseText;
+  				var obj = JSON.parse(str);
+  				var target = document.getElementById('news');
+  				target.innerHTML = obj.news;
+  			}
+  		};
+  		request.open('GET', 'content/newsjson.jsp', true);
+  		request.send();
+  	}, 2000);
+  };	
+  </script>
+  ```
+
+
+
+* Same Origin Policy(SOP)
+
+  브라우저에서 보안상의 이슈로 동일 사이트의 자원(Resource)만 접근해야 한다는 제약이다.
+
+  
+
+* Cross Origin Resource Sharing(CORS)
+
+  ``` javascript
+  response.addHeader("Access-Control-Allow-Origin", "*");
+  ```
+
+  Origin이 아닌 다른 사이트의 자원을 접근하여 사용한다는 의미이다. 따라서 ajax로 직접 요청해서 가져올 수 있다.
