@@ -19,7 +19,7 @@
 - 주요 API - 내장함수, 내장객체, BOM, **DOM**
 
 - 주석 
-  - 한줄 주석 
+  - 한줄 주석 : //
   - 다중 주석 : /* 주석내용 */
 
 ---
@@ -792,6 +792,8 @@ OBP(Object Based Programming) -> OOP(Object Oriented Programming)
 
 # Ajax (Asynchronous Javascript and xml)
 
+Ajax란 전체 페이지를 변경하는 것이 아닌 페이지의 일부분만 변경하는 web 통신 방식이다. (비동기 통신방식)
+
 * **GML**(Geography Markup Language)(IBM에서 만듬 : 출판문서 작성용도로 사용)
 
   ---> GML을 표준화시켜 만든 것이 **SGML**(Standard Generalized Markup Language)이다.
@@ -836,7 +838,7 @@ OBP(Object Based Programming) -> OOP(Object Oriented Programming)
 
     ``` javascript
     function requestAjax() { //페이지 이동없이 데이터를 받아온다.
-    	var req = new XMLHttpRequest();
+    	var req = new XMLHttpRequest(); //브라우저 내부에 있는 ajax엔진을 초기화한다.
     	var result = document.getElementById("result");
     	req.onreadystatechange = function() {		
     		alert("req.readyState : "+req.readyState);       
@@ -845,7 +847,7 @@ OBP(Object Based Programming) -> OOP(Object Oriented Programming)
                 //readyState 값 4는 서버로부터 응답이 다왔다는 것이다.
     			result.innerHTML += req.responseText; 
     	}	
-    	req.open("GET", "content/sample.txt", true); //true : 비동기 통신방식으로 보내겠다는 것이다.	
+    	req.open("GET", "content/sample.txt", true); //true : 비동기방식으로 보내겠다는 것이다.	
     	req.send(); 	
     }
     ```
@@ -909,3 +911,98 @@ OBP(Object Based Programming) -> OOP(Object Oriented Programming)
   ```
 
   Origin이 아닌 다른 사이트의 자원을 접근하여 사용한다는 의미이다. 따라서 ajax로 직접 요청해서 가져올 수 있다.
+
+
+
+* HTTP 요청 방식(웹 클라이언트가 웹 서버에게 요청하는 방식)
+
+  * GET 방식 : 
+    *  http://localhost:8000/edu/first.jsp
+
+  ​			  http://localhost:8000/edu/first.jsp?page=1&id=1000(? 뒤 문자열을 **쿼리 문자열**이라고 한다.)
+
+  ​			  쿼리 문자열 : name, value로 구성된 문자열을 말한다.
+
+  ​		* GET 방식 단점
+
+  ​			(1) 전달되는 Query 문자열이 외부에 보여진다.
+
+  ​			(2) 전달되는 Query 문자열의 길이에 제한이 있다. (128b, 256b, 512b 등)
+
+  * GET 방식일 경우 : 직접 URL입력해서, \<a>, location.href, \<Form>태그의 method 속성값이 "GET"일 때
+
+    
+
+  * POST 방식 : 요청하면서 서버에 전달할 name과 value로 구성된 데이터를 **요청 바디**에 담아서 전달한다.
+
+    * POST 방식 장점
+
+      (1) Query 문자열이 외부에 보여지지 않는다.
+
+      (2) 길이에 제한이 없다.
+
+    * POST 방식일 경우 : \<Form>태그의 method 속성값이 "POST"일 때, Ajax 요청시 POST를 지정하면
+
+
+
+* Query 문자열 인코딩 규칙
+
+  https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=%EA%B0%80%EB%82%98%EB%8B%A4+123abc
+
+  (1) 영문자, 숫자 그리고 일부 특수문자를 제외한 문자들은 %기호와 함께 16진수 코드값으로 변환되어 전달된다.
+
+  (2) 공백은 '+' 기호(%20)로 변환되어 전달된다.
+
+  (3) name과 value로 구성되어야 하며, 여러 개가 전달될 때는 '&' 기호로 연결한다.
+
+  ex) id,passwd에 가나다를 입력한 경우 : id=%EA%B0%80%EB%82%98%EB%8B%A4&passwd=rkskek
+
+  ​	  id에 ABC abc를 입력한 경우 : id=ABC%20abc&passwd=12345
+
+  encodeURIComponent
+
+# jQuery
+
+HTML 문서 안의 스크립트 코드를 단순화하도록 설계된 자바스크립트 라이브러리이다.
+
+* jQuery 라이브러리 선언
+
+  ``` javascript
+  <script src="http://code.jquery.com/jquery-xxx.js"></script>
+  ```
+
+* 메서드 제공
+
+  * **jQuery(자바스크립트객체).xxx();** : 자바스크립트 객체를 생성해서 메서드를 호출한다.
+
+  * **jQuery.xxx(); **또는 **$.xxx();** : jQuery라는 생성자 함수 이름을 통해서 메서드를 호출한다.
+
+  * jQuery API Document에서 .xxx()는 *jQuery(아큐먼트).xxx(); 형식으로 호출하고 jQuery.xxx();는 $.xxx(); 형식으로 호출한다.
+
+    ```  javascript
+    each()
+    var ary = [10,20,30,40,50];
+    $(ary).each(function(){};);
+    
+    $(아규먼트)에서 아규먼트에 들어가는 값
+    $(자바스크립트객체)
+    $("CSS선택자문자열") : 전체에서 찾는다.
+    $("CSS선택자문자열", DOM객체) : 선언한 DOM객체에서 찾는다.
+    $("HTML태그문자열") : HTML 태그에 알맞는 DOM객체를 생성한다.
+    $(함수) == $(document).ready(함수) == window.onload = 함수 : 문서렌더링이 끝나면 함수호출한다.
+    ```
+
+    
+
+* 
+
+* 
+
+* 
+
+* 
+
+  
+
+  
+
