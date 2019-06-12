@@ -983,6 +983,7 @@ HTML 문서 안의 스크립트 코드를 단순화하도록 설계된 자바스
     each()
     var ary = [10,20,30,40,50];
     $(ary).each(function(){};);
+    $.each(ary,function(){};);
     
     $(아규먼트)에서 아규먼트에 들어가는 값
     $(자바스크립트객체)
@@ -991,18 +992,55 @@ HTML 문서 안의 스크립트 코드를 단순화하도록 설계된 자바스
     $("HTML태그문자열") : HTML 태그에 알맞는 DOM객체를 생성한다.
     $(함수) == $(document).ready(함수) == window.onload = 함수 : 문서렌더링이 끝나면 함수호출한다.
     ```
+    
+    ``` javascript
+    $(...).val() : 값을 얻어오는 메서드이다.
+    
+    val() : getter
+    val(아규먼트) : setter
+    	값, 함수(함수를 수행시키고 그 결과 값으로 세팅하라는 것이다.)
+    
+    html() : getter //javascript의 innerHTML 속성과 비슷하다.
+    html(아규먼트) : setter
+    	값, 함수
 
+    text() : getter //javascript의 textContent 속성과 비슷하다. //모든 태그의 content를 꺼낸다.
+    text(아규먼트) : setter //textContent는 1개만 꺼낸다.
+    	값, 함수
+    
+    css 메서드 : 스타일과 관련된 속성값을 조정한다.
+    css("속성명") : getter
+    css("속성명","속성값")
+    css("속성명",함수)
+    css({"속성명":"속성값","속성명":"속성값",...}) : setter
+    
+    attr 메서드 : 태그의 고유 속성값을 조정한다.
+    attr("속성명") : getter
+    attr("속성명","속성값")
+    attr("속성명",함수)
+    attr({"속성명":"속성값","속성명":"속성값",...}) : setter
+          
+    추출은 첫번째 돔객체에 대해서만 한다.
+    설정은 모든 돔객체에 적용한다.
+    ```
+    
     
 
-* 
+* 이벤트 핸들러
 
-* 
+  (1) 이벤트이름(함수)
 
-* 
-
-* 
-
+  (2) on("이벤트이름", 함수) 이벤트등록 //addEventListener
   
-
+  ​	 off() - 이벤트해지 //removeEventListener
   
+  (3) one("이벤트이름", 함수) : 무조건 1번만 수행된다.
+  
+  
+  
+  일반태그의 컨텐트를 읽을 때 : html(), text()
+  
+  \<form> 태그의 서브태그들 : val()
+  
+  \<form> 태그의 서브태그중 \<textarea> : text(), val()
 
