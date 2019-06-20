@@ -94,31 +94,31 @@ exam11.jsp --- greeting.jsp 3번 : **include 액션태그** ---> 서블릿 소�
 * <%= application.getServerInfo()  %>
 * <% String msg = "오류 원인 : " + exception; %> : <%@ page isErrorPage="true" %>인 jsp 페이지에서만 사용가능하다.
 
-서버가 클라이언트를 찾아오는 일은 절대 없다!! HTTP 프로토콜 **Connection Oriented**(접속이 먼저 이루어져야 통신한다.) 와 **Stateless 방식**으로 동작한다. 신뢰성있는 통신을 하면서도 처리 효율이 좋다. 클라이언트와 서버는 계속 연결되어있는 것이 아니다. 클라이언트가 계속 새로운 요청을 한다. Cache 기술을 써서 전에 방문했던 주소를 기억한다.
+요약 정리
 
-HTTP에는 다양한 요청 방식(GET,HEAD,POST,OPTIONS,DELETE,PUT)이 있다. GET 요청헤더와 요청바디로 구성된다. POST는 쿼리문자열을 요청바디에 넣어 전송하며 쿼리문자열 타입을 원하는대로 부여할 수 있어 파일을 요청하고자 하는 경우에 사용한다. 
+서버가 클라이언트를 찾아오는 일은 절대 없다!! HTTP 프로토콜은 **Connection Oriented**(접속이 먼저 이루어져야 통신한다.) 와 **Stateless 방식**으로 동작한다. 신뢰성있는 통신을 하면서도 처리 효율이 좋다. 클라이언트와 서버는 계속 연결되어있는 것이 아니고 클라이언트가 계속 새로운 요청을 하는 것이다. Cache 기술을 써서 이전에 방문했던 주소를 기억한다.
 
-JSP 파일은 WAS에 의해 Servlet파일로 변경된다. 컨테이너에 의해 관리되는 프로그램을 웹 컴포넌트라고 한다.
+HTTP에는 다양한 요청 방식(GET,HEAD,POST,OPTIONS,DELETE,PUT)이 있다. GET방식은 요청헤더와 요청바디로 구성된다. POST방식은 쿼리문자열을 요청바디에 넣어 전송한다. 쿼리문자열에 타입을 원하는대로 부여할 수 있어 파일을 요청하고자 하는 경우에 사용한다. 
 
-Assembly Root는 WebContent이다. WEB-INF는 클라이언트가 직접적으로 접근할 수 없는 폴더이다. JDBC라이브러리를 넣을 것이다. 웹 어플리케이션의 디렉토리 구조는 다른 서버를 사용해도 같다.
+JSP 파일은 WAS에 의해 Servlet파일로 변경된다. 컨테이너에 의해 관리되는 프로그램을 **웹 컴포넌트**라고 한다.
 
-MVC패턴은 요청받는 부분(servlet)(Controller)과 응답하는 부분(jsp)(View)을 나눈다.
+Assembly Root는 WebContent이다. WEB-INF는 클라이언트가 직접적으로 접근할 수 없는 폴더이다. 나중에 JDBC라이브러리를 넣을 것이다. 웹 어플리케이션의 디렉토리 구조는 다른 서버를 사용해도 같다.
 
-Servlet은 하나의 Servlet 객체를 공유해서 수행한다!!!
+MVC패턴은 요청받는 부분(servlet)(Controller)과 응답하는 부분(jsp)(View)으로 나눈다.
 
-같은 서버에 같은 프로그램이면 Forward를 사용한다. jsp는 get과 post를 구분하지 않고 브라우저가 끝날 때까지 유지된다.
+**Servlet은 하나의 Servlet 객체를 공유해서 수행한다!!!**
 
-<jsp:plugin …….. />는 applit에서 사용하므로 사용하지 않는다.
+같은 서버에 같은 프로그램이면 **Forward**를 사용한다. jsp는 get과 post를 구분하지 않고 브라우저가 끝날 때까지 유지된다.
 
 
 
 ## 1.3 요청 동안의 객체공유방법
 
-(1) **HttpServletRequest 객체**에 저장하여 전달하는 방법 : **request scope**를 사용한다. 요청이 끝날 떄 까지 사용, **가장 많이 사용한다.**
+(1) **HttpServletRequest 객체**에 저장하여 전달하는 방법 : **request scope**를 사용한다. 요청이 끝날 떄 까지 사용, **가장 많이 사용한다.** 요청이 끝나면 사라진다.
 
-(2) **HttpServletSession 객체**에 저장하여 전달하는 방법 : **session scope**를 사용한다. session 객체가 유지되는 동안 ex) 쇼핑카트에 물품보관
+(2) **HttpServletSession 객체**에 저장하여 전달하는 방법 : **session scope**를 사용한다. session 객체가 유지되는 동안  																							ex) 쇼핑카트에 물품보관
 
-(3) **ServletContext 객체**에 저장하여 전달하는 방법 : **application scope**를 사용한다. 서버가 죽을 때 까지 ex) **모든 클라이언트에 의해 공유**되는 데이터를 저장할 때 사용한다.
+(3) **ServletContext 객체**에 저장하여 전달하는 방법 : **application scope**를 사용한다. 서버가 죽을 때 까지 																					ex) **모든 클라이언트에 의해 공유**되는 데이터를 저장할 때 사용한다.
 
 cf) **page scope는 공유가 불가**하다.
 
@@ -147,7 +147,9 @@ class MyDataVO{
 
 ## MVC(Model-View-Controller)
 
-* Model
+모델-뷰-컨트롤러(Model–View–Controller, MVC)는 소프트웨어 공학에서 사용되는 아키텍처 패턴이다.
+
+* Model : vo,dto
 
   어플리케이션의 정보를 담당한다.
 
