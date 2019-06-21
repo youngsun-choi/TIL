@@ -145,7 +145,7 @@ class MyDataVO{
 
 
 
-## MVC(Model-View-Controller)
+## 1.4 MVC(Model-View-Controller)
 
 모델-뷰-컨트롤러(Model–View–Controller, MVC)는 소프트웨어 공학에서 사용되는 아키텍처 패턴이다.
 
@@ -163,3 +163,52 @@ class MyDataVO{
 * controller : servlet
 
   어플리케이션 기능을 담당한다.
+  
+  
+
+## 1.5 EL(Expression Language)
+
+**주어진 변수명으로 보관되어 있는 객체를 뜻한다**. 표현식 태그를 대신할 수 있는 기술이다.특정 스코프 영역에 보관되어 있는 객체를 추출하여 이 객체의 값 또는 속성 값을 추출하여 표현하는 경우 사용한다. ${ ... }으로 사용한다.
+
+* <% out.println(request.getParameter(“q”)); %> : 스크립트 태그
+
+* <%= request.getParameter(“q”) %> : 액션 태그
+
+* **${param.q}** 또는 **${param[“q”]}** : param은 EL의 내장객체이다. .연산자 뿐만 아니라 대괄호도 사용가능하다.
+
+  * \${} : $앞에 \ 를 붙이면 일반 문자열이 된다.
+  * param. 쿼리 문자열 name
+  * ${ header.user-agent} : 이렇게 사용할 수 없다.
+  * **${ header["user-agent"] }** : user-agent라는 문자열로 인식한다.
+
+* pageContext를 제외한 나머지 EL 내장 객체가 참조하는 객체는 **HashMap 객체**이다.
+
+  * 변수명.xxx
+
+    (1) 변수명이 참조하는 객체가 **Map 객체이면 get(“xxx”)**를 호출한 결과와 같다.
+
+    (2) 변수명이 참조하는 객체가 **일반 Java 객체이면 getXxx()**를 호출한 결과와 같다.
+
+
+
+## 1.6 JUNIT  
+
+단위 테스트 기술이다. 메인 클래스가 없어도 테스트하고 싶은 클래스를 제대로 동작하는지 확인 해볼 수 있는 기술이다.
+
+서블릿, JSP, Service, DAO 등등
+
+* ojdbc6.jar 경로 : C:\oraclexe\app\oracle\product\11.2.0\server\jdbc\lib
+
+* 방명록 기능의 웹 프로그램
+
+  (1) VisitorVO.java 생성
+
+  (2) VisitorDAO.java 생성
+
+  -------------------------------------- JUnit 테스트
+
+  (3) HTML은 이전 실습에서 만든 거 복사, 수정
+
+  (4) VisitorServlet.java 복사, 수정 
+
+  (5) visitorView.jsp 생성
