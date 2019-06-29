@@ -11,9 +11,9 @@ public class NewsDAOTest {
 	@Test
 	public void test() {
 		NewsDAO dao = new NewsDAO();
-		NewsVO vo = new NewsVO();
 		
-		NewsVO listone = dao.listOne(1);
-		System.out.println(listone.getWriter());
+		NewsVO listone = dao.listOne(2);
+		dao.update(listone);
+		System.out.println(dao.listAll());
 	}
 }

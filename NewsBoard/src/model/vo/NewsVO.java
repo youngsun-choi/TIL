@@ -8,6 +8,9 @@ public class NewsVO {
 	private String writedate;
 	private int cnt;
 	
+	public NewsVO(){
+		this.cnt=0;
+	}
 	public int getId() {
 		return id;
 	}

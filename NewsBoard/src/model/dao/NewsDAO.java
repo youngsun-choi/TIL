@@ -59,11 +59,12 @@ public class NewsDAO {
 		boolean result = true;
 		try{
 			PreparedStatement pstmt = connectDB().prepareStatement
-					("update news set writer=?, title=?, content=? where id=?");
+					("update news set writer=?, title=?, content=?, cnt=? where id=?");
 			pstmt.setString(1, vo.getWriter());
 			pstmt.setString(2, vo.getTitle());
 			pstmt.setString(3, vo.getContent());
-			pstmt.setInt(4, vo.getId());
+			pstmt.setInt(4, vo.getCnt()+1);
+			pstmt.setInt(5, vo.getId());
 			pstmt.executeUpdate();
 			close(connectDB(), pstmt, null);
 		}catch(SQLException e) {
@@ -93,7 +94,7 @@ public class NewsDAO {
 		try{
 			Statement stmt = connectDB().createStatement();
 			ResultSet rs = stmt.executeQuery
-					("select id, writer, title, to_char(writedate,'yyyy-mm-dd'), cnt from news");
+					("select id, writer, title, to_char(writedate,'yyyy-mm-dd'), cnt from news order by id asc, writedate asc");
 			NewsVO vo;
 			while(rs.next()) {
 				vo=new NewsVO();
@@ -113,14 +114,16 @@ public class NewsDAO {
 		NewsVO vo = null;
 		try {
 			PreparedStatement pstmt = connectDB().prepareStatement
-					("select writer,title,content from news where id=?");
+					("select id, writer,title,content,cnt from news where id=?");
 			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				vo = new NewsVO();
-				vo.setWriter(rs.getString(1));
-				vo.setTitle(rs.getString(2));
-				vo.setContent(rs.getString(3));
+				vo.setId(rs.getInt(1));
+				vo.setWriter(rs.getString(2));
+				vo.setTitle(rs.getString(3));
+				vo.setContent(rs.getString(4));
+				vo.setCnt(rs.getInt(5));
 			}
 			close(connectDB(), pstmt, rs);
 		}catch(SQLException e) {

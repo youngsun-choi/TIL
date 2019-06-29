@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
 <title>news</title>
 <style>
 	td{
@@ -47,23 +48,33 @@
 	table{
 		margin : 0 auto;
 	}	
+	div#write, div#read{
+		display : none;
+	}
 </style>
 </head>
 <body>
-<div>
-	<h1>뉴스게시판</h1>
+<h1>뉴스게시판</h1>
+<script>
+window.onpageshow = function(event) { // window.performance.navigation.type == 2 : backbutton을 이용한 뒤로가기
+    if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+    	location.href="/mvc/news";
+    }
+}
+</script>
+<div id="newsBoard">
 <%
 	List<NewsVO> list = (List<NewsVO>)request.getAttribute("list");
 	if(list != null){
 %>
 	<table>
-	<tr><th>번호</th><th>제목</th><th>작성자</th><th>작성일</th><th>조회수</th></tr>
+	<tr id="table_head"><th>번호</th><th>제목</th><th>작성자</th><th>작성일</th><th>조회수</th></tr>
 <%
 		for(NewsVO vo : list){
 %>
 			<tr>
 				<td><%=vo.getId() %></td>
-				<td onclick="displayReadForm('<%= vo.getId()%>');"><%=vo.getTitle() %></td>
+				<td onclick="location.href='news?action=read&newsid=<%=vo.getId()%>';"><%=vo.getTitle() %></td> 
 				<td><%=vo.getWriter() %></td>
 				<td><%=vo.getWritedate() %></td>
 				<td><%=vo.getCnt() %></td>
@@ -77,61 +88,63 @@
 	if(request.getAttribute("msg") != null){
 %>
 	<script>
-		alert('${msg}'); //' ' 인용부호 꼭 주기!!!
+		alert('${msg}'); 
 	</script> 
 <%
 	}
 %>
 	<button onclick="displayDiv(1)">뉴스 작성</button>
 </div>
-<div id="write" style="display :none;">
-	<output></output>
+<div id="write">
 	<form method='post' action='/mvc/news'>
 	<input type="hidden" name="action" value="insert">
-		<input id="n_writer" name="writer" placeholder="작성자명을 입력해주세요." autofocus><br>
-		<input id="n_title" name="title" placeholder="제목을 입력해주세요."><br>
-		<textarea id="n_content" name="content" rows="10" cols="25" placeholder="내용을 입력해주세요."></textarea><br>
+		<input id="w_writer" name="writer" placeholder="작성자명을 입력해주세요." required autofocus><br>
+		<input id="w_title" name="title" placeholder="제목을 입력해주세요." required><br>
+		<textarea id="w_content" name="content" rows="10" cols="25" placeholder="내용을 입력해주세요." required></textarea><br>
 		<input type="submit" value="저장">
 		<input type="reset" value="재작성">
-		<button onclick="displayDiv(2)">취소</button><!-- 수정과 삭제를 일반 버튼으로 -->
+		<input type="button" value="취소" onclick="displayDiv(2)">
 	</form>
 </div>
 <script>
 function displayDiv(type){
-		if(type==1){
+		if(type==1){ //뉴스작성 버튼 클릭시
 			document.getElementById('write').style.display='block';
-			document.getElementsByTagName('output')[0].textContent="";
-			document.getElementById('n_writer').value=""; 
-			document.getElementById('n_title').value="";
-			document.getElementById('n_content').value="";
-			document.querySelector("#write [type=submit]").value="저장";
-			document.querySelector("#write [type=reset]").value="재작성";
-			document.querySelector("#write [type=button]").value="취소";
-			document.querySelector("#write [type=hidden]").value="insert";
-		}else if(type==2){
+			document.getElementById('read').style.display='none';
+		}else if(type==2){ //취소 버튼 클릭시
 			document.getElementById('write').style.display='none';
+			document.getElementById('w_writer').value=""; 
+			document.getElementById('w_title').value="";
+			document.getElementById('w_content').value="";
 		}
 }
-function displayReadForm(id){
-	location.href="news?action=read&id="+id;
-}
-<%
-	NewsVO listone = (NewsVO)request.getAttribute("listone");		
-	if(listone != null){
-%>
-		//alert("눌림");
-		document.getElementById('write').style.display='block';
-		document.getElementsByTagName('output')[0].textContent="뉴스내용";
-		document.getElementById('n_writer').value="<%= listone.getWriter() %>"; 
-		document.getElementById('n_title').value="<%= listone.getTitle() %>";
-		document.getElementById('n_content').value="<%= listone.getContent() %>";
-		document.querySelector("#write [type=submit]").value="확인";
-		document.querySelector("#write [type=reset]").value="수정";
-		document.querySelector("#write [type=button]").value="삭제";	
-		document.querySelector("#write [type=hidden]").value=<%= listone.getId()%>;
-<%
-	}
-%>
 </script>
+<%
+NewsVO listone = (NewsVO)request.getAttribute("listone");		
+if(listone != null){
+%>
+<div id="read">
+	<form method='post' action='/mvc/news'>
+	<input type="hidden" name="action" value="update">
+	<input type="hidden" name="newsid" value="<%= listone.getId() %>">
+		<input id="r_writer" name="writer" required autofocus><br>
+		<input id="r_title" name="title" required><br>
+		<textarea id="r_content" name="content" rows="10" cols="25" required></textarea><br>
+		<input onclick="location.href='news';" type="button" value="확인"><!-- <input type="submit" value="확인"> -->
+		<input type="submit" value="수정">
+		<input onclick="location.href='news?action=delete&newsid=<%= listone.getId() %>';" type="button" value="삭제">
+	</form>		
+</div>
+<script>
+	document.getElementById('newsBoard').style.display='none';
+	document.getElementById('write').style.display='none'; 
+	document.getElementById('read').style.display='block';
+	document.getElementById('r_writer').value="<%= listone.getWriter() %>"; 
+	document.getElementById('r_title').value="<%= listone.getTitle() %>";
+	document.getElementById('r_content').value="<%= listone.getContent() %>";
+</script>
+<%
+}
+%>
 </body>
 </html>
