@@ -226,3 +226,109 @@ sequence는 유니크한 값을 뽑아낼 뿐 순차적일 필요가없다. sequ
 (2) 미팅 정보 수정 폼에서 '수정하기' 버튼이 클릭되었을 떄 - **POST(hidden 타입이 필수!)**
 
 ​	새로 입력된 내용을 서버에 전송하여 실제 DB수정이 이루어져야 한다.
+
+
+
+## 1.9 JSTL (JSP Standard Tag Library )
+
+아파치오픈그룹이 만든 JSP의 커스텀태그 모음이다.
+
+종류
+
+* **core Library** 
+
+  - 변수 선언, 반복문 등 간단한 프로그램 로직 구현을 대신하는 커스텀태그를 지원하는 라이브러리이다.
+
+  - <%@ taglib **prefix="c"** uri="http://java.sun.com/jsp/jstl/core" %> -> \<c:xxxx>  
+
+    \<prefix:xxx> : JSP 커스텀 태그이다. taglib 지시자 태그에 prefix를 설정한다.
+
+  - 태그 종류
+
+    (1) \<c:set> : 특정 scope에 데이터를 저장한다. setAttribute와 비슷하다.
+
+    (2) \<c:remove> : removeAttribute와 비슷하다.
+
+    (3) \<c:out> : EL과 비슷한데 default값을 설정할 수 있다.
+
+    (4) \<c:if> : else절은 지원하지 않는다.
+
+    (5) \<c:choose>,\<c:when>,\<c:otherwise> : 다중 if문 처리할 수 있다. when태그는 원하는 만큼 줄 수 있다.
+
+    (6) \<c:forEach> : traditional for와 enhanced for(varStatus속성 지원)문을 모두 지원한다.
+
+    (7) \<c:forTokens> : items에 지정한 문자열을 delims에 저장된 구분자 단위로 나눈다. 
+
+    (8) **\<c:import>** : 외부의 다른 자원을 읽어와 포함시킬 수 있다. 가져온 자원을 scope 영역에 저장해준다.
+
+    (9) **\<c:param>** : URL문자열에 쿼리 문자열을 준다.
+
+    (10) \<c:url> :URL을 생성 해주는 기능을 제공한다.
+
+    (11) \<c:redirect> :지정한 페이지로 리다이렉트 시킨다.
+
+    (12) \<c:catch> :예외가 발생할 수 있는 코드를 작성하여 var이름에 저장한다.
+
+* format(i18n) Library : 각 나라를 위한 라이브러리이다.
+  * <%@ taglib **prefix="fmt"** uri="http://java.sun.com/jsp/jstl/fmt" %> -> \<fmt:xxxx>
+
+* sql Library
+  * <%@ taglib **prefix="sql"** uri="http://java.sun.com/jsp/jstl/sql" %> -> \<sql:xxxx>
+
+* **xml Library**
+
+  * <%@ taglib **prefix="x"** uri="<http://java.sun.com/jsp/jstl/xml>" %> -> \<x:xxxx>
+
+  * 태그 종류
+
+    (1) \<x:parse> : xml 문서를 읽어서 dom객체를 생성한다.
+
+* function Library
+
+css selector : html
+
+Xpath(XML Path Language) :xml - 문서의 구조를 통해 경로 위에 지정한 구문을 사용하여 항목을 배치하고 처리하는 방법을 기술하는 언어이다.
+
+``` xml
+<?xml version="1.0" encoding="utf-8"?>
+<wikimedia> //루트 엘리먼트이다.
+  <projects> //자식 엘리먼트는 3개(빈칸,projects,빈칸)이다. 빈칸도 포함한다.
+    <project name="Wikipedia" launch="2001-01-05">
+      <editions>
+        <edition language="English">en.wikipedia.org</edition>
+        <edition language="German">de.wikipedia.org</edition>
+        <edition language="French">fr.wikipedia.org</edition>
+        <edition language="Polish">pl.wikipedia.org</edition>
+      </editions>
+    </project>
+    <project name="Wiktionary" launch="2002-12-12">
+      <editions>
+        <edition language="English">en.wiktionary.org</edition>
+        <edition language="French">fr.wiktionary.org</edition>
+        <edition language="Vietnamese">vi.wiktionary.org</edition>
+        <edition language="Turkish">tr.wiktionary.org</edition>
+      </editions>
+    </project>
+  </projects>
+</wikimedia>
+
+Xpath
+= : equals -등가연산자는 '='로 준다.
+/wikimedia/projects/project/@name 
+: @를 붙이면 속성명으로 인식한다. 모든 project 요소의 name 속성을 선택
+/wikimedia/projects/project/editions/edition[@language="English"]/text()
+: 모든 영문 Wikimedia 프로젝트의 주소(language 속성이 English인 모든 edition 요소의 문자열)를 선택
+
+ex) 개발자 도구에서 
+Copy Selector : #예
+Copy Xpath : //*[@id="예"] (//는 조상이 누가있든 이라는 의미다.)
+
+section/article/h1/div/span/a
+section//a : section 밑에 자손 a를 찾으라는 말이다.
+section/a : section 밑에 자식 a를 찾으라는 말이다.
+```
+
+
+
+
+
