@@ -93,6 +93,15 @@ window.onpageshow = function(event) { // window.performance.navigation.type == 2
 <%
 	}
 %>
+	<br>
+	<form method='post' action='/mvc/news'>
+	<input type="hidden" name="action" value="search">
+		<select>
+			<option>제목</option>
+		</select>
+		<input type="search" name="keyword">
+		<button>뉴스검색</button>
+	</form><br>
 	<button onclick="displayDiv(1)">뉴스 작성</button>
 </div>
 <div id="write">

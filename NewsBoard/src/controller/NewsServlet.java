@@ -62,6 +62,8 @@ public class NewsServlet extends HttpServlet {
 				request.setAttribute("msg", title + " 뉴스가 성공적으로 수정되었어요~!");
 			else
 				request.setAttribute("msg", title + " 뉴스 수정을 실패했어요~!");
+		}else if(action.equals("search")) {
+			request.setAttribute("msg", title + "search!");
 		}
 		request.setAttribute("list", dao.listAll());		
 		request.getRequestDispatcher("/jspexam/news.jsp").forward(request, response);

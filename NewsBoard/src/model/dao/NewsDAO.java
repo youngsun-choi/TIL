@@ -92,7 +92,7 @@ public class NewsDAO {
 	public List<NewsVO> listAll(){
 		List<NewsVO> list = new ArrayList<>();
 		try{
-			Statement stmt = connectDB().createStatement();
+			Statement stmt = connectDB().createStatement(); //여기서 자꾸 오류가...
 			ResultSet rs = stmt.executeQuery
 					("select id, writer, title, to_char(writedate,'yyyy-mm-dd'), cnt from news order by id asc, writedate asc");
 			NewsVO vo;
@@ -131,5 +131,47 @@ public class NewsDAO {
 			e.printStackTrace();
 		}
 		return vo;
+	}
+	public List<NewsVO> listWriter(String writer){
+		List<NewsVO> list = new ArrayList<>();
+		try{
+			Statement stmt = connectDB().createStatement(); //여기서 자꾸 오류가...
+			ResultSet rs = stmt.executeQuery
+					("select id, writer, title, to_char(writedate,'yyyy-mm-dd'), cnt from news order by id asc, writedate asc");
+			NewsVO vo;
+			while(rs.next()) {
+				vo=new NewsVO();
+				vo.setId(rs.getInt(1));
+				vo.setWriter(rs.getString(2));
+				vo.setTitle(rs.getString(3));
+				vo.setWritedate(rs.getString(4));
+				vo.setCnt(rs.getInt(5));
+				list.add(vo);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public List<NewsVO> search(String key, String searchType){
+		List<NewsVO> list = new ArrayList<>();
+		try{
+			Statement stmt = connectDB().createStatement(); //여기서 자꾸 오류가...
+			ResultSet rs = stmt.executeQuery
+					("select id, writer, title, to_char(writedate,'yyyy-mm-dd'), cnt from news order by id asc, writedate asc");
+			NewsVO vo;
+			while(rs.next()) {
+				vo=new NewsVO();
+				vo.setId(rs.getInt(1));
+				vo.setWriter(rs.getString(2));
+				vo.setTitle(rs.getString(3));
+				vo.setWritedate(rs.getString(4));
+				vo.setCnt(rs.getInt(5));
+				list.add(vo);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 }
