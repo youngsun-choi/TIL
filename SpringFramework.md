@@ -94,6 +94,8 @@ Annotation 설정
 
 복수의 사용자가 인터넷을 통해 DB에 접근하고 안전하게 정보를 읽고 쓸 수 있게 지원하는 어플리케이션이다.
 
+기본적으로 Forword방식으로 전송한다. redirect방식으로 전송하고 싶으면 "redirect:에 context명을 제외한 path정보"를 사용한다. 그러면 302라는 응답과 함께 다시 끌어간다.
+
 * 웹 어플리케이션 구조
   	* 티어 : 어플리케이션의 구조를 물리적으로 나눈 것
    * 레이어 : 어플리케이션의 구조를 논리적으로 나눈 것
@@ -148,6 +150,14 @@ Annotation 설정
   ```
 
   * javax.servlet.forward.request_uri :  클라이언트가 요청한 uri 다.
+
+* vo에 담아 보낼 떄(Dispatcher Servlet이 처리해준다.)
+
+1. Controller 매개변수 값이 3개 이상일 때 VO model에 담아 사용한다. 
+2. vo 멤버변수 이름과 쿼리문자열 이름이 같아야한다.
+3. Dispatcher Servlet이 클래스 이름에서 앞에 첫문자를 소문자로 만들어 request객체에 저장해준다.
+4. vo에 담을 쿼리문자열 값을 주지 않으면 setter메서드를 호출하지 않는다.
+5. @ModelAttribute("사용하고자 하는 이름")를 사용해서 request객체이름을 저장할 수 있다. 
 
 (3) MyBatis : JDBC 프로그래밍을 더 효율적으로 할 수 있게 해준다. (HiberNate라는 것도 있다.)
 
