@@ -159,6 +159,99 @@ Annotation 설정
 4. vo에 담을 쿼리문자열 값을 주지 않으면 setter메서드를 호출하지 않는다.
 5. @ModelAttribute("사용하고자 하는 이름")를 사용해서 request객체이름을 저장할 수 있다. 
 
+* 쿼리문자열을 @PathVariable를 사용하여 추출하기
+
+``` java
+(value="/character/detail/{name}/{number}") //{}를 씌우면 동적 패스가 된다. 어떤 값이 오든 상관없다.
+public String getAllBoards(@PathVariable("number") int num, @PathVariable String name, Model model){
+     if(name.equals("kakao")) {
+	    	 if (num == 1) 
+	    		 model.addAttribute("imgname", "ryan");
+     }
+}
+//@PathVariable("number") int num :에는 이번 요청에서 사용된 매핑명에서 number라는 이름으로 저장된 값이 저장된다. 
+//@PathVariable String name : 전달받을 매개변수 이름과 pathVariable에 의해 추출되는 이름이 같으면 따로 이름을 지정하지 않아도 된다.
+//Model model : 매개변수로 Map,Model,ModelMap을 생성하여 사용하면 자원을 재사용할 수 있다.
+			   model.addAttribute로 view로 보낸다.
+```
+
+``` xml
+//java객체를 json 또는 xml로 변환하기 위해 사용한다. pom_xml 파일의 종료 dependencies태그 바로 위에 삽입
+<dependency>
+    	<groupId>com.fasterxml.jackson.core</groupId>
+    	<artifactId>jackson-databind</artifactId>
+    	<version>2.9.9</version>
+</dependency>
+	
+<dependency>
+	<groupId>commons-fileupload</groupId>
+	<artifactId>commons-fileupload</artifactId>
+	<version>1.3.1</version>
+</dependency>
+```
+
+```xml
+//annotation을 사용하기 위해 작성한다. servlet-context_xml 파일종료 beans태그 바로 위에 삽입한다.
+<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+
+<context:component-scan base-package="service" /> 
+<context:component-scan base-package="dao" />
+<context:component-scan base-package="vo" />
+```
+
+
+
+* Lotto : LottoVO, LottoDAO, LottoService, lottoForm1, LottoController, lottoView1
+
+* **Annotation은 singletone으로 객체가 생성될 떄 미리 생성한다.**
+* @Component [springioc]
+* [springmvc] : spring container에 의해 관리된다.
+  * @Controller : Controller클래스로 객체 생성해달라는 것이다.
+  * @Service : spring container에 의해 관리되는 객체로 역할은 service이다.
+  * @Repository : spring이 대신 객체 생성해주는 것으로 저장소와 관련된 것이다.
+
+* **@Autowired로 객체를 생성하면 이 객체를 사용하는 다른 클래스에도 @Autowired를 사용해야 한다.**
+
+* @RestController = @Controller + **@ResponseBody** 
+
+  @ResponseBody //뷰를 거치치 않고 클라이언트에 바로 응답한다.
+
+* FileUpload
+
+  * **enctype="multipart/form-data" method="post"**
+
+  * <beans:bean id="multipartResolver" 
+
+    class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+
+  * 클라이언트에서 업로드되는 파일은 하나의 파트(다중파일이 업로드 될 때는 여러 개의 파트로) 구성되어 전달된다.
+
+  * 이 파트를 아규먼트로 받기 위해서는 컨트롤러메서드의 매개변수타입을 다음 3가지 중 하나로 지정한다. 
+    xxx(MultipartFile타입을멤버변수로정의한VO클래스 vo)
+    xxx(MultipartRequest mreq)  다중 파일일 때
+
+  * MultipartFile의 주요 메소드
+
+    | 메서드 이름                          | 메서드 설명                                           |
+    | ------------------------------------ | ----------------------------------------------------- |
+    | String getName()                     | 파라미터 이름을 구한다 .                              |
+    | String getOriginalFilename()         | 업로드 한 파일의 실제 이름을 구한다.                  |
+    | boolean isEmpty()                    | 업로드 한 파일이 존재하지 않는 경우 true 를 리턴한다. |
+    | long getSize()                       | 업로드한 파일의 크기를 구한다.                        |
+    | byte[] getBytes() throws IOException | 업로드 한 파일 데이터를 구한다.                       |
+    | InputStream getInputStream()         | InputStrem을 구한다.                                  |
+    | void transferTo(File dest)           | 업로드 한 파일 데이터를 지정한 파일에 저장한다 .      |
+
+    
+
+* @ResponseBody
+
+  * @ResponseBody는 controller가 직접 클라이언트한테 응답한다.   
+  * json형식으로 출력 - pom.xml **jackson-databind** 라이브러리를 통해
+
+* @XmlRootElement : VO객체에 붙여주어야한다.
+
 (3) MyBatis : JDBC 프로그래밍을 더 효율적으로 할 수 있게 해준다. (HiberNate라는 것도 있다.)
 
 ```
