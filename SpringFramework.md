@@ -88,7 +88,7 @@ Annotation 설정
     (3) 타입으로 찾아서 2개이상 이면 NoUniqueBeanDefinitionException 발생
     (4) 없으면 NoSuchBeanDefinitionException 발생
 
-(2) **Spring MVC**
+## (2) **Spring MVC**
 
 **웹 어플리케이션**
 
@@ -205,7 +205,9 @@ public String getAllBoards(@PathVariable("number") int num, @PathVariable String
 * Lotto : LottoVO, LottoDAO, LottoService, lottoForm1, LottoController, lottoView1
 
 * **Annotation은 singletone으로 객체가 생성될 떄 미리 생성한다.**
+
 * @Component [springioc]
+
 * [springmvc] : spring container에 의해 관리된다.
   * @Controller : Controller클래스로 객체 생성해달라는 것이다.
   * @Service : spring container에 의해 관리되는 객체로 역할은 service이다.
@@ -245,14 +247,70 @@ public String getAllBoards(@PathVariable("number") int num, @PathVariable String
 
     
 
-* @ResponseBody
+* **@ResponseBody**
 
-  * @ResponseBody는 controller가 직접 클라이언트한테 응답한다.   
-  * json형식으로 출력 - pom.xml **jackson-databind** 라이브러리를 통해
+  : 뷰를 거치지 않고 controller가 직접 클라이언트한테 응답한다.   
+
+  * pom.xml **jackson-databind** 라이브러리를 통해 json, xml 등 형식으로 변환 가능하다.
+
+    cf) jackson : Json 뿐만 아니라 XML/YAML/CSV 등 다양한 형식의 데이타를 지원하는 data-processing 툴이다.
 
 * @XmlRootElement : VO객체에 붙여주어야한다.
 
-(3) MyBatis : JDBC 프로그래밍을 더 효율적으로 할 수 있게 해준다. (HiberNate라는 것도 있다.)
+* **@ExceptionHandler**
+
+  : controller 내에서 오류가 발생했을 때 처리한다. (지역적)
+
+* **@ControllerAdvice**
+
+  :  비슷한 로그, 예외를 따로 전담하여 처리한다. (전역적)  
+
+  
+
+## (3) MyBatis 
+
+## : JDBC 프로그래밍을 더 효율적으로 할 수 있게 해준다. (HiberNate라는 것도 있다.)
+
+예외처리, 반복문 처리할 때 사용한다. dao 프로그램과 dao에서 사용하는 sql문 명령어를 분리시킨다.
+
+sql mapper와 프로그램 구동방법을 알아야한다.
+
+: 객체 지향 어플리케이션에서 관계형 데이터베이스를 쉽게 사용할 수 있도록 도와주는 데이터 맵핑 프레임워크이다.
+
+* MyBatis 설치
+
+  : mybatis-3.4.1.jar 파일을 WEB-INF/lib 폴더에 저장한다.
+
+* Mybatis 매핑파일
+
+  ``` xml
+  <?xml version="1.0" encoding="UTF-8" ?>
+  <!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="resource.VisitorMapper">
+   	<select id="selectVisitor"  resultType="model.vo.VisitorVO">
+      	select id, name, to_char(writedate,'yyyy"년"mm"월"dd"일"') writedate, memo from visitor
+   	</select>
+   	 <select id="selectVisitor1"  resultType="model.vo.VisitorVO"><!-- <![CDATA[<]]> : cdata section이라는 의미이다. < 대괄호 안에 담아서 사용해야한다.  -->
+      	select id, name, to_char(writedate,'yyyy"년"mm"월"dd"일"') writedate, memo from visitor where id <![CDATA[<]]> 5 
+   	</select>
+    	<insert id="insertVisitor"  parameterType="model.vo.VisitorVO">
+    		<selectKey resultType="_int" keyProperty="id" order="BEFORE">
+        		select visitor_seq.nextval from dual     
+      	</selectKey>  
+      		insert into visitor (id, name, writedate, memo) values (#{id}, #{name},sysdate, #{memo})
+  	</insert>
+  	<select id="searchVisitor"  parameterType="java.lang.String" resultType="model.vo.VisitorVO">
+      	select id, name, to_char(writedate,'yyyy"년"mm"월"dd"일"') writedate, memo from visitor where memo like '%'||#{key}||'%'
+      </select>
+  	<delete id="deleteVisitor"  parameterType="_int"  >
+      	delete from visitor where id = #{id}
+  	</delete>
+  </mapper>
+  ```
+
+  
 
 ```
 [추가 라이브러리 준비 방법]
