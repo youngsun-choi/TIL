@@ -281,6 +281,19 @@ sql mapper와 프로그램 구동방법을 알아야한다.
 
   : mybatis-3.4.1.jar 파일을 WEB-INF/lib 폴더에 저장한다.
 
+* MyBatis3 주요 구성 요소
+
+  | 구성요소 / 구성파일                                | 설명                                                         |
+  | -------------------------------------------------- | ------------------------------------------------------------ |
+  | MyBatis configuration file                         | Mybatis3의 작업 설정을 설명하는 xml파일이다. 데이터베이스 연결 대상, 매핑 파일의 경로 등 세부사항을 작성한다. |
+  | org.apache.ibatis.session.SqlSessionFactoryBuilder | SqlSessionFactory 객체를 생성한다.                           |
+  | org.apache.ibatis.session.SqlSessionFactory        | SqlSession 객체를 생성한다.                                  |
+  | org.apache.ibatis.session.SqlSession               | SQL 실행 및 트랜잭션 제어를 위한 API를 제공한다.             |
+  | Mapper interface                                   | Mybatis3는 Mapper interface에 대한 구현 클래스를 자동으로 생성한다. |
+  | Mapping file                                       | SQL 및 O/R 매핑 설정을 설명하는 XML파일이다.                 |
+
+  
+
 * Mybatis 매핑파일
 
   ``` xml
