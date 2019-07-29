@@ -157,5 +157,64 @@ request.setCharacterEncoding("UTF-8");
   }
   ```
 
-  
 
+
+
+## edu, sedu
+
+- Dynamic Web Project : Eclipse
+- Context : WAS (Context 단위로 관리한다.)
+- Web Application : Develper
+
+## Session [HttpSession 객체]
+
+**HttpSession 객체**는 요청을 보내온 클라이언트 단위로 객체가 한 개만 생성되는 객체이다. 한 번 생성되면 해당 클라이언트가 종료될 때까지 객체가 유지된다. 클라이언트별로 어떤 정보를 원하는 시간까지 유지하고 싶을 때 사용한다.
+
+ex) 클라이언트가 주문할 때까지 또는 로그아웃할 때까지 선택한 정보를 유지
+
+* Scope : 메모리에 저장장소가 만들어진 후 언제까지 유지되느냐를 말한다.
+
+  ```  
+  * page scope 
+  	요청된 서버 프로그램이 수행하는 동안 유지된다. ex)지역변수
+  * request scope  
+  	요청된 서버 프로그램이 수행하고 응답하기 전까지 유지된다.
+  				HttpServletRequest 객체에 저장된 객체
+  * session scope 
+  	세션이 유지되는 동안(클라이언트가 살아있는 동안)
+  				HttpServlet 객체에 저장된 객체
+  * application scope 
+  	서버가 기동되고 나서 종료될 때까지 ex) 멤버변수, ServletContext 객체에 저장된 객체
+  ```
+
+- 지역변수 : 수행하는 동안, 클라이언트별로 각각 메모리 할당
+
+- 멤버변수 : 서버가 종료될 때까지 메모리영역을 할당한다. 모든 클라이언트에 의해 공유된다.
+
+- 클라이언트 별로 개별적 저장, 원할 때까지 유지하고 싶을 때 -> **HttpSession 객체에 보관**한다.
+
+- 개별적으로 증가된다.
+
+- HttpSession 브라우저가 기동되어 있는 동안
+
+- invalidate() 메서드가 호출되기 전까지
+
+- **쿠키** : 서버가 클라이언트를 잊지 않기 위해서 브라우저에 보관하는 name,value 쌍 데이터를 말한다.
+
+- 브라우저에 쿠키가 있으면 그 session id값에 해당하는 객체를 생성하고 없으면 session id를 생성한다.
+
+- session 객체는 고유의 id값을 가지고 브라우저가 살아있는동안 유지된다.
+
+- session 생성,저장,삭제,추출
+
+  (1) 객체로 만든다. (배열객체) 
+
+  ​	- request.getSession(), request.getSession(true) : HttpSession이 존재하면 현재 HttpSession
+
+  ​	- request.getSession(false)
+
+  (2) 저장 : session.setAttribute("이름",객체)
+
+  (3) 삭제 : session.removeAttribute("이름")
+
+  (4) 추출 : session.getAttribute("이름") //return 값이 object이므로 강제 형변환이 필수이다.
