@@ -88,16 +88,13 @@ public class TestServlet extends HttpServlet {
 
 대부분의 웹 자원들은 파일의 확장자로 파일의 종류를 구분하지만 Servlet의 경우에는 불가능하기 때문이다. Servlet의 경우에는 컴파일을 통해서 .class 확장자를 갖는데 이미 Java Applet에서 사용하고 있어 사용할 수가 없다. 따라서 Servlet 클래스 파일의 경우에는 서버에서 Servlet프로그램으로 인식되어 처리되도록 등록과 매핑이라는 설정을 주어야한다. web.xml이라는 디스크립터 파일 또는 **Servlet 소스 안에 Java의 애노테이션 구문으로 선언**(Servlet 3.0부터 추가)하는 방법이 있다.
 
-* Servlet 정의 애노테이션 : @WebServlet () Url mappings**을 사용하는 이유 : 
-* 매핑명이 같은 Servlet 클래스가 여러 개 있으면 Tomcat 서버가 아예 구동되지 않는다. Url mapping명은 유일해야한다.
-
+* Servlet 정의 애노테이션 : @WebServlet (Url mappings) 
+* 매핑명이 같은 Servlet 클래스가 여러 개 있으면 Tomcat 서버가 아예 구동되지 않는다. **Url mapping명은 유일**해야한다.
 * Servlet API
-  * **HttpServletRequest** : 요청정보를 추출하고자 할 떄 사용(쿼리 문자열)
-  * **HttpServletResponse** : 응답과 관련하여 응답스트림 객체 생성, 컨텐트 타입 설정
 
 ## 1.5 쿼리 문자열 추출 방법
 
-쿼리 문자열은 name=value&name=value... 형식으로 키,값 쌍으로 이루어져있다. HttpServletRequest 객체의 **getParameter()**를 활용한다.
+쿼리 문자열은 웹 클라이언트에서 웹 서버에 요청을 보낼 때 추가로 전달하는 문자열이다. name=value&name=value... 형식의 키,값 쌍으로 이루어져있다. HttpServletRequest 객체의 **getParameter()**를 활용한다.
 
 ``` java
 String getParameter(String) : value 값 또는 null 또는 "" 리턴한다.
@@ -110,17 +107,35 @@ Get 방식의 경우에는 Query 문자열 추출시 한글이 깨지지 않는�
 request.setCharacterEncoding("UTF-8");
 ```
 
-``` java
-<a href='"+request.getHeader("referer")+"'></a> //html URL이 바뀌어도 따로 수정하지 않아도 된다.
-```
 
 
+## 1.6 요청 및 응답 객체 생성
 
-## 1.6 요청 재지정 (Forward와 Redirect)
+- **HttpServletRequest** : 클라이언트에서 전달되는 다양한 요청 정보를 Servlet 에 전달하는 기능을 수행한다. 쿼리 문자열을 꺼낼 때 사용한다.
+
+- **HttpServletResponse** : 클라이언트의 응답에 사용되는 객체로 응답과 관련하여 응답스트림 객체를 생성한다. 컨텐트 타입을 설정할 수 있다.
+
+- Servlet 객체가 생성된 상태인지에 따른 수행흐름
+
+  (1) **Servlet을 객체 생성하여 수행**시킬 때
+
+  ​	Servlet 클래스를 로딩하여 객체 생성 -> Servlet 객체의 init() 메서드 호출 -> Servlet 객체의 service() 메서드 호출
+
+  (2) **이미 생성된 Servlet을 객체 수행**시킬 때
+
+  ​	Servlet 객체의 service() 메서드 호출
+
+  (3) **Servlet 객체가 메모리에서 해제**될 때의 처리
+
+  ​	Servlet 객체의 destroy() 메서드 호출
+
+  
+
+## 1.7 요청 재지정 (Forward와 Redirect)
 
 요청 재지정이란 클라이언트에서 요청한 Servlet의 응답 대신 다른 자원(Servlet, JSP, HTML 등)의 수행 결과를 클라이언트에 대신 응답하는 기능이다. 요청 재지정에는 Forward와 Redirect하는 방법이 있다.
 
-* Forward 방식
+* **Forward** 방식
 
   ``` java
   @WebServlet("/forward") 
@@ -142,7 +157,7 @@ request.setCharacterEncoding("UTF-8");
 
   
 
-* Redirect 방식
+* **Redirect** 방식
 
   ``` java
   //http://localhost:8000/sedu/forward 주소가 출력된다.
@@ -157,6 +172,7 @@ request.setCharacterEncoding("UTF-8");
   }
   ```
 
+<<<<<<< HEAD
 
 
 
@@ -167,6 +183,16 @@ request.setCharacterEncoding("UTF-8");
 - Web Application : Develper
 
 ## Session [HttpSession 객체]
+=======
+* edu, sedu
+  * Dynamic Web Project : Eclipse
+  * Context : WAS (Context 단위로 관리한다.)
+  * Web Application : Develper
+
+  
+
+## 1.8 Session [HttpSession 객체]
+>>>>>>> c55cccca7c5bfb4ba51ce2527593e568ba9909dd
 
 **HttpSession 객체**는 요청을 보내온 클라이언트 단위로 객체가 한 개만 생성되는 객체이다. 한 번 생성되면 해당 클라이언트가 종료될 때까지 객체가 유지된다. 클라이언트별로 어떤 정보를 원하는 시간까지 유지하고 싶을 때 사용한다.
 
@@ -209,12 +235,64 @@ ex) 클라이언트가 주문할 때까지 또는 로그아웃할 때까지 선�
 
   (1) 객체로 만든다. (배열객체) 
 
+<<<<<<< HEAD
   ​	- request.getSession(), request.getSession(true) : HttpSession이 존재하면 현재 HttpSession
 
   ​	- request.getSession(false)
+=======
+  ​	- request.getSession(), request.getSession(true) : HttpSession이 존재하면 현재 HttpSession을 반환하고 존재하지 않으면 새로운  Session 객체를 사용할 수 있도록 준비해준다.
+
+  ​	- request.getSession(false) : HttpSession이 존재하면 현재 HttpSession을 반환하고 존재하지 않으면 새로운 Session을 생성하지 않고 null을 반환한다.
+>>>>>>> c55cccca7c5bfb4ba51ce2527593e568ba9909dd
 
   (2) 저장 : session.setAttribute("이름",객체)
 
   (3) 삭제 : session.removeAttribute("이름")
 
+<<<<<<< HEAD
   (4) 추출 : session.getAttribute("이름") //return 값이 object이므로 강제 형변환이 필수이다.
+=======
+  (4) 추출 : session.getAttribute("이름") //return 값이 object이므로 강제 형변환이 필수이다.
+
+* 상태 정보 관리
+  * **Cookie** 기술 
+
+    상태정보를 클라이언트에 저장하는 방법을 말한다. ex) 계정 저장, 하룻동안 광고 안보게 하기
+
+  * **HttpSession** 기술 
+
+    클라이언트마다 만들어지는 HttpSession 객체에 상태정보를 저장하는 방법을 말한다. 보안이 중요한 정보를 저장할 수 있으며 브라우저가 구동되어있는 동안만 저장을 유지할 수 있다. 내부적으로 Cookie도 사용한다.
+
+    cf) 상태정보를 계속 유지하고 싶을 경우 : Database에 저장
+
+## referer
+
+요청헤더정보이다. 최초의 루트를 가리킨다. 정해진 루트를 통해 왔는지 다른 사이트를 거쳐왔는지 알 수 있다.
+
+``` java
+<a href='" + request.getHeader("referer") + "'>상품선택화면</a> //http://localhost:8000/sedu/html/productlog2.html
+<a href='"+request.getRequestURL()+"'>상품비우기</a>
+//http://xx.xx.xxx.xxx:8000/sedu/basket2
+```
+
+
+
+## 1.9 파일 업로드
+
+클라이언트(브라우저)에서 서버에게 요청을 보낼 때, name=value&name=value...로 구성된 쿼리 문자열을 전달할 수 있다. (영문,숫자, 일부특수문자는 그대로 전달, 나머지는 %기호와 함께 16진수로 인코딩된다.) 
+
+--->name=value&name=value... (**application/x-www-form-urlencoded**)
+
+서버에게 전달하는 데이터에 클라이언트에 존재하는 파일을 첨부해서 요청하려는 경우에는 다른 형식으로 전달해야 한다. 
+
+---> **multipart/form-data** : 데이터를 여러 개의 파티션으로 나눠서 보내라는 것이다. ex)이메일
+
+**@MultipartConfig** 
+
+클라이언트에서 전송되는 multipart/form-data 형식의 데이터를 처리하는 Servlet이 정의해야 하는 애노테이션이다. 
+
+Collection\<Part> parts = request.getParts();
+
+String filename = part.getSubmittedFileName(); //실제 클라이언트가 전송한 파일이름을 추출한다.
+
+>>>>>>> c55cccca7c5bfb4ba51ce2527593e568ba9909dd
