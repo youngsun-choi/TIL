@@ -14,7 +14,7 @@ Hadoop = HDFS(저장)+MapReduce(파일처리)
   
   대용량 파일을 저장할 수 있다는 것을 빼고는 일반 파일 시스템과 비슷하다.
 
-* 데몬(daemon) 프로세스
+* **데몬(daemon) 프로세스**
 
   background에서 수행 중인 프로그램을 뜻한다. 보통 끝에가 xxxxd로 끝난다. ex) httpd, pop3d
 
@@ -54,15 +54,22 @@ Hadoop = HDFS(저장)+MapReduce(파일처리)
 
   Hadoop 1.x 는 mapreduce만 제공한다.
 
-* **Apache Hive**
+---
 
-  Apache Hive 데이터웨어 하우스 소프트웨어는 행과 열 구조로 데이터를 다룰 수 있을 때 사용한다. SQL을 사용하여 분산 스토리지에 있는 대규모 데이터 세트의 읽기, 쓰기, 관리를 용이하게 한다. MapReduce 기반의 High-level abstraction(추상화 객체)이다.
+## **Apache Hive**
 
-  특징
+Apache Hive 데이터웨어 하우스 소프트웨어는 행과 열 구조로 데이터를 다룰 수 있을 때 사용한다. SQL을 사용하여 분산 스토리지에 있는 대규모 데이터 세트의 읽기, 쓰기, 관리를 용이하게 한다. MapReduce 기반의 High-level abstraction(추상화 객체)이다.
 
-  1. **HiveQL**과 같은 SQL-like 언어를 사용한다.
-  2. Hadoop 클러스터에서 MapReduce Job을 생성한다.
-  3. Facebook에서 데이터 웨어하우스를 위해 개발되었다.
-  4. 데이터 포멧과 위치를 가지고 있는 **metastore**을 가지고 있다.
+특징
 
-  데이터 레이크 > 데이터 웹어하우스 > 데이터 마트
+1. **HiveQL**과 같은 SQL-like 언어를 사용한다.
+2. Hadoop 클러스터에서 MapReduce Job을 생성한다.
+3. Facebook에서 데이터 웨어하우스를 위해 개발되었다.
+4. 데이터 포멧과 위치를 가지고 있는 **metastore**을 가지고 있다.
+
+데이터 레이크 > 데이터 웹어하우스 > 데이터 마트
+
+---
+
+## Spark
+
