@@ -71,5 +71,49 @@ Apache Hive 데이터웨어 하우스 소프트웨어는 행과 열 구조로 �
 
 ---
 
-## Spark
+## Apache Spark
 
+Apache Spark는 오픈 소스 클러스터 컴퓨팅 프레임워크이다. MapReduce를 대신하기위해 나왔다. MapReduce는 처리할 대상과 결과를 hdfs에 저장한다.  따라서 disk io 에서 수행이 많아 수행속도가 느려진다. Spark의 경우에는 인메모리에서 수행해 수행속도가 MapReduce보다 빠르다.  
+
+* RDD(Resilient Distributed Datasets)
+  1. **인메모리 기반**으로 데이터를 처리한다.
+  2. spark에서는 내부적으로 연산하는 데이터들을 모두 RDD타입으로 처리한다.
+  3. **Scala, Python, Java, R** 언어를 사용한다.
+  4. 분산된 레코드들이 만들어진 뒤에는 변하지 않는다. (Immutable)
+  5. 데이터 셋을 잘게 잘라서 분산한다. (Partitioned)
+
+* RDD를 제어하는 API Operation 타입
+
+  * **Transformation** : RDD에서 새로운 RDD를 생성하는 함수이다.
+
+    ex) map(), flatMap(), filter() 등
+
+  * **Action** : RDD에서 RDD가 아닌 타입의 data로 변환하는 함수이다.
+
+    ex) reduce(), count(), collect() 등
+
+  * **Fault-Tolerant** 확보가 가능하다. Lineage만 기록해두면 동일한 RDD를 생성할 수 있으므로 오류가 발생했을 때 스스로 복구할 수 있다.
+
+  * RDD 객체 특징
+
+    1. Read Only이다.
+
+    2. 1~n 개의 partition으로 구성된다.
+
+    3. RDD 연산은 Transformation과 Action으로 나뉜다.
+
+    4. Transformation은 Lazy-execution을 지원한다.
+
+       **Lazy-execution** 이란?
+
+       Action 연산이 실행되기 전에는 Transformation 연산이 처리되지 않는 것을 의미한다.
+
+    5. Lineage를 통해서 Fault-Tolerant를 확보한다.
+
+       **Lineage**란?
+
+       Transformation 연산 정보를 보관한 것을  Lineage라 한다.
+
+* 인터랙티브 방식과 프로그램적 방식이 있다. 인터랙티브 방식은 명령어를 입력하면 결과가 바로 나오는 방식이다.
+* ./eclipse& : background에서 이클립스가 실행된다.
+* jar tvf wc7.jar : a
