@@ -133,5 +133,82 @@ R 스튜디오 - R을 편리하게 사용할 수 있도록 돕는 통합개발�
 
 ### 5. 함수
 
+```
+[함수 정의]
+func1 <- function(매개변수) {
+  xx <- 10
+  yy <- 20
+  return(xx*yy)
+}
+```
+
+* 함수가 정의하고 있는 매개변수 사양에 맞춰서 꼭 아규먼트를 전달해야 한다.
+
+* 리턴값이 없는 함수는 NULL이 리턴된다.
+
+* return()문이 생략된 경우에는 마지막으로 출력된 데이터값이 자동으로 리턴된다. 따라서 리턴함수를 사용하여 명확히 구현하는 것이 필요하다.
+
+* 아규먼트 타입을 제한하려는 경우에는 is.xxx() 함수를 활용한다.
+
+* 기본값을 갖는 매개변수를 선언하여 선택적으로 전달되는 아규먼트를 처리할 수 있다. ex) f3<-function(p="R") print(p) ---> f3(), f3(p="PYTHON") 으로 호출가능
+
+  ex) f4 <- function(p1="ㅋㅋㅋ",p2) for(i in 1:p2) print(p1) ---> f4(p2=5) 로 호출 
+
+* 아규먼트 개수와 타입을 가변적으로 처리 가능하다. 
+
+  ex) f5 <- function(...) {print("TEST"); data <- c(...); print(length(data))} 
+
+* 함수 안에서 만들어진 지역변수는 함수내에서만 사용 가능하다.
+
+* 수행문자 1개일 때 중괄호 생략 가능하다.
+
+* invisible()함수
+
+  호출할 때는 return값을 표시해주지 않는다. 호출하고 변수에 담거나 다른 연산에 사용되야지 표시된다. ex) ft.3 <- function(x) invisible(x+10)
+
+* stop() 함수
+
+  error를 표시해주고 더 이상 수행하지 않는다.
+
+* warning() 함수
+
+  warning을 표시해주고 끝까지 수행한다.
+
+* **try() 함수**
+
+  error가 발생해도 다음을 그대로 수행한다. java의 try-catch문과 비슷하다. 많을 경우 중괄호로 묶는다. ex) try(testError(-1))
+
+* tryCatch() 함수
+
+  error, waring이 났을 떄 대신 수행할 함수를 지정할 수 있다.
+
+  ```
+  testAll <-function(p){
+    tryCatch({
+      if(p=="오류테스트"){
+        testError(-1)
+      }else if (p =="경고테스트"){
+        testWarn(6)
+      }else{
+        cat("정상 수행..\n")
+        print(testError(2))
+        print(testWarn(3))
+      }
+    },warning = function(w){
+      print(w)
+      cat("-.-;;\n")
+    }, error = function(e){
+      print(e)
+      cat("ㅠㅠ \n")
+    },finally ={
+      cat("오류, 경고 발생 여부를 따라서 반드시 수행되는 부분입니다요..\n")
+    })
+  }
+  ```
+
+  
+
+
+
 
 
