@@ -208,7 +208,27 @@ func1 <- function(매개변수) {
 
   
 
+## 웹 스크랩핑 / 크롤링
 
+정적수집
+
+* 웹 스크랩핑 : 웹 상에서 콘텐츠를 가져와 원하는 부분을 추출하는 것이다. 
+* 웹 크롤링 : 서버를 통해 콘텐츠를 가져오는 것이다.
+* 개발자도구-copy-selector 
+* rvest 라이브러리 주요 함수
+  * html_nodes(x,css,xpath) : 돔객체를 찾아준다. (x : 읽고자 하는 정보)
+  * html_node(x,css,xpath)
+  * html_text(x,trim=FALSE) : 컨텐츠를 읽는다. (trim : True일 경우 blank를 없애준다.)
+  * html_attrs(x) : 태그가 가지고 있는 모든 속성을 추출한다.
+  * html_attr(x, name, default="")  : 태그가 가지고 있는 특정 속성을 추출한다.
+* xml 라이브러리 주요 함수
+  * htmlParse() : read_html과 비슷하다.
+* httr 라이브러리 주요 함수
+  * GET() :  GET방식으로 사이트 내용을 가져온다.
+  * POST() : POST방식으로 사이트 내용을 가져온다.
+  * unique() : 중복을 제거해준다.
+* 한글이 깨지는 경우
+  * iconv(text1,"CP949","UTF-8")
 
 
 
