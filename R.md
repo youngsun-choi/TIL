@@ -206,7 +206,8 @@ func1 <- function(매개변수) {
   }
   ```
 
-  
+
+---
 
 ## 웹 스크랩핑 / 크롤링
 
@@ -234,11 +235,15 @@ func1 <- function(매개변수) {
 
 자바스크립트를 이용해 원하는 내용을 추출한다.
 
+---
+
 ## Selenium
 
 Selenium은 웹앱을 테스트하는데 이용하는 프레임워크이다.
 
 * saaply : 리스트 대신 행렬, 벡터 등의 데이터 타입으로 결과를 변환하는 함수이다.
+
+---
 
 ## 정규표현식
 
@@ -248,3 +253,75 @@ Selenium은 웹앱을 테스트하는데 이용하는 프레임워크이다.
 * [^[:alnum:]] : 알파벳과 숫자를 제외해 변경한다. (공백도 변경된다.)
 * [[:space:]] : 공백을 변경한다. 
 
+---
+
+## 날짜와 시간관련 함수들
+
+* 날짜 : %d (day 01-31), %a (Mon), %A (Monday), %m (month 01-12), %b (Jan), %B (January), %y (yy), %Y (YYYY)
+* 시간 : %H, %M, %S
+
+---
+
+## apply 계열 함수
+
+* apply(X,Margin,Fun) : X:배열 또는 행렬, Margin:함수를 적용하는 방향(1:행,2:열), Fun:함수
+
+* lapply() : 결과를 리스트 형식으로 반환한다.
+
+* sapply() : s-simple, **가능한 결과를 simple한 데이터셋으로 반환**한다.
+
+* tapply() : 특정 기준에 따라 데이터를 그룹으로 묶은 뒤 각 그룹마다 주어진 함수를 적용하여 결과를 반환한다.
+
+* mapply() : m-multiple, 여러 벡터를 받아 첫번째,두번재 등 원소끼리 함수를 수행한다.
+
+* **sapply함수에 원소를 주느냐, 데이터프레임을 주느냐에 따라 처리하는 방식이 다르다.**
+
+  ```
+  (count <- 1)
+  myf <- function(x,wt=T){
+    print(paste(x,"(",count,")")) #x벡터, 벡터마다 count가 붙는다.
+    Sys.sleep(10)
+    if(wt) r <- paste("*",x,"*")
+    else r <- paste("#",x,"#")
+    count <<- count + 1; #전역변수에 적용
+    return(r)
+  }
+  sapply(df$w,myf)
+  sapply(df$w,myf,F)
+  sapply(df$w,myf,wt=F)
+  (rr1 <- sapply(df$w,myf,wt=F)) #myf가 원소개수마다 호출된다!!!
+  str(rr1) 
+  (count<-1)
+  sapply(df,myf) #### df : 변수들로 구성된 벡터모임이다.!!!
+  (rr2 <- sapply(df, myf)); str(df) #myf가 2번(열의 개수) 호출된다.!!!
+  str(rr2)
+  rr2[1,1]; rr2[1,"w"]
+  r <- sapply(df,myf) #변수단위로 myf 함수의 결과값을 갖고 있다가 마지막에 리턴한다. 
+  str(r) #matrix
+  ```
+
+---
+
+## 시각화
+
+* 고수준함수 : plot(), pie(), barplot(), boxplot(), hist()
+
+* 저수준함수 : 고수준함수를 꾸며준다. title(), lines(), axis(), legend(), points(), text()
+
+* 칼라팔레트 함수 : rainbow(), cm.colors(), topo.colors(), terrian.colors(), heat.colors()
+
+* 그래프를 파일에 저장하는 방법
+
+  1. 그려지는 그래프를 파일로 저장
+
+     ```
+     png("mytest.png",500,400);
+     dev.off();
+     ```
+
+  2. 그래프를 그린 후에 파일에도 저장
+
+     ```
+     dev.copy(png,"mytest.png"); 또는 dev.copy(pdf,"mytest.pdf");
+     dev.off();
+     ```
