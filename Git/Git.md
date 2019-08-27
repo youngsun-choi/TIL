@@ -14,9 +14,8 @@
 
 * 구조
 
-  * git 구조도 이미지
   * **Working Directory** : 현재 작업하고 있는 디렉토리를 말한다.
-  * **Stage Area** : 커밋이 되기위해 대기하는 파일이 저장된다. 
+  * **Staging Area(INDEX)** : 커밋이 되기위해 대기하는 파일이 저장된다. 
   * **Repository** : 저장소이다.
     * Local Repository : 자신의 PC에 존재하는 저장소를 말한다.
     * Remote Repository : Github와 같은 원격 저장소를 말한다.
@@ -46,8 +45,8 @@
     * 최초로 파일을 추적할 때
     * 파일이 수정된 후 버전을 만들기 전
   * 커밋 전에 add 명령어를 사용하는 이유 : 원하는 파일만 선택적으로 커밋할 수 있게 하기 위해서이다.
-  * git add를 하면 커밋 대기상태(stage area)로 들어간다.
-  * stage -  repository 
+  * git add를 하면 커밋 대기상태(staging area)로 들어간다.
+  * staging area(INDEX) -  repository 
     * stage : 커밋이 되기를 대기 하고 있는 파일이 저장된다.
     * repository : - 커밋이 된 결과가 저장된다.
 
@@ -68,12 +67,12 @@
   * git diff : git add하기 전과 add한 후의 파일 내용을 비교한다.
   
 * 과거의 버전으로 돌아가기
-  * reset : 원격 저장소에 파일을 올리고 난 뒤에는 reset 하지 않는 것이 좋다.
-  * revert
+  * reset : 특정 버전으로 되돌아갈 수 있지만, 되돌린 버전 이후의 버전들은 히스토리에서 삭제된다. 원격 저장소에 파일을 올리고 난 뒤에는 reset 하지 않는 것이 좋다.
+  * revert : 특정 버전으로 되돌아갈 수 있으며, 되돌린 버전 이후의 버전들의 이력이 남아있다.
   
 * git 파일 삭제
 
-  * git rm [File Name] : 원격 저장소와 로컬 저장소에 있는 파일을 삭제한다.
+  * git rm -r [File Name] : 원격 저장소와 로컬 저장소에 있는 파일을 삭제한다.
   * git rm --cached [File Name] : 원격 저장소에 있는 파일만 삭제한다.
   
 * git commit -am [커밋하고자 하는 내용] : add와 commit을 같이 한다.
