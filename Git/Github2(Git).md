@@ -72,7 +72,7 @@
    $ git commit --amend
    ```
 
-   * commit 메시지를 수정하기 전에 Staging Area에 변경을 해주면, 해당 파일까지 포함하여 다시 커밋을 진행함.
+   * commit 메시지를 수정하기 전에 Staging Area를 변경 해주면, 해당 파일까지 포함하여 다시 커밋을 진행함.
 
 5. 현재 작업내역 커밋 시점으로 되돌리기 **(주의!!!)**
 
@@ -194,20 +194,139 @@
 ## github.io 페이지 만들기
 
 1. [github.io 템플릿 사이트](<https://startbootstrap.com/>)
-
 2. .travis, gulpfile, package, package-lock 파일 삭제!!!
-
 3. 해당 폴더에서 git init, add, commit
-
 4. github.io repository 만들기
-
 5. git remote add origin {url}
-
 6. git push -u origin master
-
 7. visual studio code - Extensions - open in browser 설치 - Alt+B
 
----
+##  Branch 활용하기
+
+> git init을 하였을 때 (master)는 사실 master 브랜치에 있다라는 사실을 보여주고 있는 것이다.
+
+1. branch 생성
+
+   ``` bash
+   (master) $ git branch {branch이름}
+   (master) $ git branch
+   *master
+   {branch이름}
+   ```
+
+2. branch 이동
+
+   ```bash
+   $ git checkout {branch이름}
+   ```
+
+   * 위 두 명령어를 동시에 실행하려면 아래와 같이 한다.
+
+   ``` bash
+   (위에 2문장을 한 번에 사용)
+   (master) $ git checkout -b {branch이름} 
+   ```
+
+3. branch 삭제
+
+   ```bash
+   $ git branch -d {branch이름} 
+   ```
+
+4. branch 병합
+
+   ```bash
+   
+   ```
+
+   * master branch에  feature/footer을 병합한다.
+   * 항상 병합을 하고 싶은 대상의 branch로 옮겨서 진행해야 한다.
+   * 병합시에 발생할 수 있는 상황은 아래와 같다.
+
+   
+
+## Git merge
+
+## 1. Fast-forwarding
+
+실제로 branch를 나눈 이후에 master branch에 커밋이 발생하지 않았고, 단순히 커밋 만 옮기면 되는 경우, merge 커밋이 발생하지 않는다.
+
+## 2. Auto Merge
+
+branch를 나눈 이후에 master branch에 커밋이 발생하였으나, 동일한 파일이 수정되지 않아서 자동으로 병합이 되는 경우, merge 커밋이 발생한다.
+
+``` bash
+$ git log --graph --oneline
+* 417b2a4 (HEAD -> master) Fix a.txt, b.txt
+*   bd3bae8 Merge branch 'feature/footer'
+|\
+| * 3dbf644 (feature/footer) Complete footer
+* | 5e0db6c README 추가
+|/
+*   03c091b Merge branch 'feature/main'
+|\
+| * a3d95c6 Complete mian feature
+* | 182e70c Add README.md
+|/
+* 98e758c Init css/js
+* 534a4d0 Add index.html
+```
+
+## 3. Merge conflict 발생
+
+branch를 나눈 이후에 master branch에 커밋이 발생하였고, 동일한 파일이 각자 다른 branch에서 수정된 경우 자동으로 merge가 되지 않는다. 따라서 merge conflict가 발생하고, 직접 수정 후 커밋을 해야한다.
+
+``` ba
+(master) $ git merge feature/footer
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+Git은 충돌이 발생한 파일에 아래와 같이 표기 해준다. 해당 부분을 찾아서 수동으로 해결해야 한다. **충돌 위치를 파악하기 위해서는 git status를 통해 확인할 수 있다!** 
+
+``` bash
+<<<<<<< HEAD
+블라블라~ 내용 추가함.
+=======
+footer를 개발함.
+>>>>>>> feature/footer
+```
+
+``` bash
+$ git add .
+$ git commit
+```
+
+커밋을 하게 되면, merge 커밋이 발생한다.
+
+* 1상황 : merge 하려고 할 때 이후 branch가 없으면 branch를 끌어온다. (fast-forword한다.)
+* 2-1 상황 : merge하려는 branch가 모두 서로 다른 파일일 경우에는 자동으로 merge된다.
+* 2-2 상황 : merge하려는 branch에 동일한 파일이 있을 경우에는 merge conflict를 해결해야 한다.
+* **merge를 할 때는 병합하고 싶은 branch로 돌아와야 한다!!!**
+
+## Stashing 상황
+
+현재 변경사항을 담아둘 수 있는 임시공간이 존재한다.
+
+1. 현재 변경사항 담기
+
+   ``` bash
+   $ git stash
+   $ git stash list
+   ```
+
+2. 임시 저장사항 불러오기
+
+   ``` bash
+   $ git stash pop
+   ```
+
+   위의 명령어는 apply + drop 과 동일하다.
+
+## Pull Request
+
+협업에서 다른사람에게 pull하라는 request를 보낼 수 있다.
 
 ## 참고자료
 
@@ -234,3 +353,9 @@
   [한국 자율 출퇴근 혹은 원격 근무가 되는 회사](<https://github.com/milooy/remote-or-flexible-work-company-in-korea> )
 
   [Github Visuallizing](<https://git-school.github.io/visualizing-git/#free-remote>)
+  
+  [Git Flow](<http://woowabros.github.io/experience/2017/10/30/baemin-mobile-git-branch-strategy.html>)
+  
+  [Github Flow](<https://ujuc.github.io/2015/12/16/git-flow-github-flow-gitlab-flow/>)
+  
+  [Git Book](<https://git-scm.com/book/ko/v2>)
