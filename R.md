@@ -366,4 +366,215 @@ useNIADic() # NIADic 사전 설정
 
 ## wordcloud, wordcloud2 package
 
-## 
+wordcloud2(데이터, 옵션)
+
+* 옵션 : minsize, size, col, rotateRatio, backgroundColor, **figPath**(이미지)
+
+1. 기본형 워드클라우드
+
+## ggplot2 package
+
+**ggplot(데이터 세트, aes(데이터 속성))**
+
+* 여러 줄로 작성 시 앞의 명령어 뒤에 + 기호를 붙여야 한다.
+
+1. 그래프 기본틀 
+
+   ```
+   ggplot(airquality, aes(x=Day, y=Temp))
+   ```
+
+2. 산점도, geom_point() 함수
+
+   ```
+   ggplot(airquality, aes(x=Day, y=Temp))+geom_point(size=3, color="blue")
+   ```
+
+3. 꺾은선그래프, geom_line() 함수
+
+   ```
+   ggplot(airquality, aes(x=Day, y=Temp))+geom_line()
+   ```
+
+4. 그래프에 그래프 더함
+
+   ```
+   ggplot(airquality, aes(x=Day, y=Temp))+geom_point()+geom_line()
+   ```
+
+5. 막대 그래프, geom_bar() 함수
+
+   ```
+   ggplot(mtcars, aes(x=factor(cyl))) + geom_bar(width = 0.5)
+   ```
+
+   * x축에 해당하는 데이터의 수를 y축에 표시한다.
+
+   ```
+   ggplot(data=w, aes(x=year, y=weight)) + geom_bar(aes(fill=year), stat="identity") + 
+     geom_label(aes(label=weight), nudge_y=-1.1)+coord_cartesian(ylim=c(60, 75))
+   ```
+
+   * **geom_bar(stat="identity")** : y축을 y축에 지정된 값으로 표현한다.
+   * **coord_cartesian(ylim=c(60, 75))** : y축의 표현범위를 설정한다.
+   * **geom_label(nudge_y=1.1)** : y축 값을 nudge_y거리만큼 띄어 표시해준다.
+
+6. 누적 막대그래프
+
+   ```
+   ggplot(mtcars, aes(x=factor(cyl))) +
+     geom_bar(aes(fill=factor(gear)))
+   ```
+
+   * ggplot에 fill이라는 변수를 바로 주어도 된다.
+   * fill = factor형 데이터일 경우 완전히 다른 컬러로 채운다.
+   * fill = numeric형 데이터(연속 데이터) 그라데이션 컬러로 채운다.
+
+7. 선버스트 차트
+
+   ```
+   ggplot(mtcars, aes(x=factor(cyl)))+
+     geom_bar(aes(fill=factor(gear))) +
+     coord_polar()
+   ```
+
+8. 상자 그림, geom_boxplot() 함수
+
+   ```
+   ggplot(airquality, aes(x=Day, y=Temp, group=Day)) +
+     geom_boxplot()
+   ```
+
+   * **group=Day** : 날짜별 온도 분포를 확인할 수 있다.
+
+9. 히스토그램, geom_histogram() 함수
+
+   ```
+   ggplot(airquality, aes(Temp)) +
+     geom_histogram(binwidth = 0.5)
+   ```
+
+   * binwidth = 비율 : 그래프의 폭을 기본값의 비율만큼 조정한다.
+
+### 그래프 꾸미기
+
+직선그리기
+
+1. 사선, geom_abline() 함수
+
+   ```
+   ggplot(economics, aes(x=date,y=psavert)) +
+     geom_line() + #절편 12.18671, 기울기 -0.0005444
+     geom_abline(intercept = 12.18671, slope = -0.0005444) 
+   ```
+
+   ```
+   #date를 기준으로 psavert(개인 저축률)이 얼마인지 출력한다.
+   lm(psavert~date, data=economics) 
+   ```
+
+2. 평행선, geom_hline()  함수
+
+   ```
+   #평행선 - 개인 저축률의 평균값
+   ggplot(economics, aes(x=date,y=psavert)) +
+     geom_line() +
+     geom_hline(yintercept = mean(economics$psavert), col="red")
+   ```
+
+3. 수직선, geom_vline() 함수 
+
+   ```
+   #수직선 - 개인 저축률이 최솟값일 때 날짜
+   (x_inter <- filter(economics, psavert == min(economics$psavert))$date)
+   ggplot(economics,aes(x=date,y=psavert)) +
+     geom_line() +
+     geom_vline(xintercept = x_inter, col="red")
+   ```
+
+텍스트 입력 및 도형 그리기
+
+1. 텍스트, geom_text() 함수
+
+   ```
+   ggplot(airquality, aes(x=Day,y=Temp)) +
+     geom_point() +
+     geom_text(aes(label=Temp, vjust=0, hjust=-3))
+   ```
+
+2. 도형 및 화살표, annotate() 함수
+
+   ```
+   ggplot(mtcars,aes(x=wt,y=mpg)) +
+     geom_point() +
+     annotate("rect", xmin=3, xmax = 4, ymin = 12,ymax = 21, alpha = 0.5, 
+              fill = "skyblue") +
+     annotate("segment",x=2.5,xend = 3.7, y=10,yend = 17,color="red",
+              arrow=arrow()) +
+     annotate("text",x=2.5,y=10,label="point")
+   ```
+
+3. 그래프 및 축 제목, labs() 함수
+
+   ```
+   ggplot(mtcars, aes(x=gear)) + geom_bar() +
+     labs(x="기어수", y="자동차수", title="변속기 기어별 자동차수")
+   ```
+
+4. 테마 적용, theme() 함수
+
+   ```
+   imsi <- ggplot(mtcars, aes(x=gear)) + geom_bar() +
+     labs(x="기어수", y="자동차수", title="변속기 기어별 자동차수")
+   
+   imsi + theme_gray()
+   imsi + theme_bw()
+   imsi + theme_linedraw()
+   imsi + theme_light()
+   imsi + theme_dark()
+   imsi + theme_minimal()
+   imsi + theme_classic()
+   imsi + theme_void()
+   ```
+
+트리맵 그리기
+
+```
+treemap(sales_df, vSize="saleAmt", index=c("product", "region"), title="A기업 판매현황")
+```
+
+## plotyly package
+
+```
+p <- ggplot(data = mpg, aes(x = displ, y = hwy, col = drv)) + geom_point()
+ggplotly(p)
+```
+
+```
+p <- ggplot(data = diamonds, aes(x = cut, fill = clarity)) + 
+  geom_bar(position = "dodge")
+ggplotly(p)
+```
+
+## ggmap package
+
+1. 주소가 영어일 때
+
+   ```
+   mk <- geocode("seoul", source = "google")
+   print(mk)
+   cen <- c(mk$lon, mk$lat)
+   map <- get_googlemap(center=cen, maptype="roadmap",zoom=12, marker=mk)
+   ggmap(map)
+   ```
+
+2. 주소가 한글일 때
+
+   ```
+   mk <- geocode(enc2utf8("강남구 역삼동 테헤란로 212"), source = "google")
+   cen <- c(mk$lon, mk$lat)
+   map <- get_googlemap(center=cen, maptype="roadmap",zoom=16)
+   ggmap(map) + 
+     geom_point(aes(x=mk$lon, y=mk$lat), alpha=0.4, size=5, color="pink") +
+     geom_text(aes(x=mk$lon, y=mk$lat, label="우리가 공부하는 곳", vjust=0, hjust=0))
+   ```
