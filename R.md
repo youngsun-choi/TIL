@@ -578,3 +578,9 @@ ggplotly(p)
      geom_point(aes(x=mk$lon, y=mk$lat), alpha=0.4, size=5, color="pink") +
      geom_text(aes(x=mk$lon, y=mk$lat, label="우리가 공부하는 곳", vjust=0, hjust=0))
    ```
+
+## leaflet package
+
+- leaflet() : leaflet map widget을 생성하고 데이터를 연결한다. 각각의 함수는 %>%를 통해 연결할 수 있다.
+- setView() : 지도의 중심과 확대 정도를 설정한다.
+- addTiles() : 기본 타일(OpenStreetMap)을 불러와서 지도를 보여준다.
