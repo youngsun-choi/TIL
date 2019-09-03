@@ -584,3 +584,30 @@ ggplotly(p)
 - leaflet() : leaflet map widget을 생성하고 데이터를 연결한다. 각각의 함수는 %>%를 통해 연결할 수 있다.
 - setView() : 지도의 중심과 확대 정도를 설정한다.
 - addTiles() : 기본 타일(OpenStreetMap)을 불러와서 지도를 보여준다.
+
+## tm package
+
+- 텍스트 데이터의 정제작업을 지원하는 다양한 변환함수를 제공한다.
+- tm_map(x#코퍼스, Fun#변환에 사용할 함수)
+- 코퍼스(corpus: 말뭉치)를 주어야 한다. 코퍼스란 언어학에서 구조를 이루고 있는 텍스트 집합으로 통계 분석 및 가설 검증, 언어 규칙의 검사 등에 사용된다.
+- corp2 <- tm_map(corp1,stripWhitespace) # 여러 개의 공백을 하나의 공백으로 변환한다.
+  corp2 <- tm_map(corp2,removeNumbers) # 숫자를 제거한다.
+  corp2 <- tm_map(myCorpus, content_transformer(tolower)) # 영문 대문자를 소문자로 변환한다.
+  corp2 <- tm_map(corp2,removePunctuation) # 마침표,콤마,세미콜론,콜론 등 문자 제거한다.
+  corp2 <- tm_map(corp2,PlainTextDocument)
+  stopword2 <- c(stopwords('en'),"and","but") # 기본 불용어 외에 불용어로 쓸 단어 추가
+  corp2 <- tm_map(corp2,removeWords,stopword2) # 불용어 제거하기 (전치사 , 관사 등)
+
+## t 검정
+
+* **귀무가설** : 연구자가 **부정**하고 싶은 가설
+
+* **대립가설** : 연구자가 **주장**하고 싶은 가설
+
+* t검정(t.text()함수 사용) : 두 집단간에 값의 분표에 차이가 잇는지 확인하는 검정
+
+* 검정 결과에서는 p-value(유의 확률)이 중요하다. 주로 95% 신뢰수준을 적용하며 **p-value 값이 0.05보다 작으면** 1종 오류의 발생확률이 적다고 판단하여 **대립가설을 채택**한다. (결과가 잘 나온 것이다.)
+
+* **p-value 값이 0.05보다 크면** 1종 오류의 발생확률이 크다고 판단하여 **귀무가설을 채택**한다. (좀 더 연구가 필요한 것이다.)
+
+* 1종 오류란 귀무가설이 옳은데도 귀무가설을 기각하고 대립가설을 채택하는 상황을 말한다.
